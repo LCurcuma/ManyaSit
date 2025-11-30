@@ -3,29 +3,33 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function RegisterPage() {
+export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const router = useRouter(); // хук для редіректу
+  const router = useRouter();
 
-  const handleRegister = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("/api/register", {
+      const res = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
 
       const data = await res.json();
+
       if (!res.ok) {
-        setError(data.error || "Помилка реєстрації");
+        setError(data.error || "Помилка логіну");
         return;
       }
 
-      // Після успішної реєстрації – редірект на MainPage
-      router.push("/main"); // якщо твій MainPage.jsx знаходиться за шляхом /app/main/page.jsx
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      // редірект тільки після успішного логіну
+      router.push("/main");
     } catch (err) {
       setError("Помилка з сервером");
       console.error(err);
@@ -33,8 +37,8 @@ export default function RegisterPage() {
   };
 
   return (
-    <form onSubmit={handleRegister}>
-      <h1>Реєстрація</h1>
+    <form onSubmit={handleLogin}>
+      <h1>Логін</h1>
       <input
         type="text"
         placeholder="Username"
@@ -49,10 +53,8 @@ export default function RegisterPage() {
         onChange={(e) => setPassword(e.target.value)}
         required
       />
-      <button type="submit">Зареєструватися</button>
+      <button type="submit">Увійти</button>
       {error && <p style={{ color: "red" }}>{error}</p>}
-      <a href="/login">Login</a>
     </form>
-  
   );
 }

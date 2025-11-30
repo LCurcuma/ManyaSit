@@ -6,8 +6,15 @@ export default function SitAnim() {
     const [frame, setFrame] = useState(1);
     let [clicks, setClicks] = useState(0);
 
-    function changeFrame() {
-        setClicks(clicks + 1);
+    async function changeFrame() {  const token = localStorage.getItem("token");
+    const res = await fetch("/api/click", {
+      method: "POST",
+      headers: { Authorization: "Bearer " + token },
+    });
+
+    const data = await res.json();
+      setClicks(data.clicks);
+      
         setFrame(2);
         setTimeout(() => {
             setFrame(3);
