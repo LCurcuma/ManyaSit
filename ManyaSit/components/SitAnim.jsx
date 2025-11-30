@@ -7,7 +7,7 @@ export default function SitAnim() {
     let [clicks, setClicks] = useState(0);
 
     function changeFrame() {
-        setClicks(clicks+1);
+        setClicks(clicks + 1);
         setFrame(2);
         setTimeout(() => {
             setFrame(3);
