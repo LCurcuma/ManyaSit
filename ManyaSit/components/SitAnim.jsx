@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState , useEffect} from "react";
 
 export default function SitAnim() {
     const [frame, setFrame] = useState(1);
   let [clicks, setClicks] = useState(0);
+  const [token, setToken] = useState(null);
   
-  const token = localStorage.getItem("token");
+  useEffect(() => {
+    setToken(localStorage.getItem("token")); // ✅ виконується лише на клієнті
+  }, []);
 
     async function changeFrame() {  const token = localStorage.getItem("token");
     const res = await fetch("/api/click", {
