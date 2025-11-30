@@ -4,12 +4,17 @@ import { useState } from "react";
 
 export default function SitAnim() {
     const [frame, setFrame] = useState(1);
-    let [clicks, setClicks] = useState(0);
+  let [clicks, setClicks] = useState(0);
+  
+  const token = localStorage.getItem("token");
 
     async function changeFrame() {  const token = localStorage.getItem("token");
     const res = await fetch("/api/click", {
       method: "POST",
-      headers: { Authorization: "Bearer " + token },
+      headers: { 
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${token}`, // обов'язково Bearer
+    },
     });
 
     const data = await res.json();
