@@ -36,7 +36,15 @@ export async function POST(req) {
       expiresIn: "7d",
     });
 
-    return new Response(JSON.stringify({ token }), {
+    // Return both token and user info so client can save user locally
+    const safeUser = {
+      id: user.id,
+      username: user.username,
+      clicks: user.clicks,
+      avatar_url: user.avatar_url,
+    };
+
+    return new Response(JSON.stringify({ token, user: safeUser }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });

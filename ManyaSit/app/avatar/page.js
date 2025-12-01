@@ -2,18 +2,18 @@
 
 import { useState, useEffect } from "react";
 import styles from "./page.module.scss";
+import { supabase } from "../../lib/supabase"; // твій конфіг Supabase
 
-export default function AvatarUploadPage() {
-
+export default function AvatarUploadPage({ setUser, user }) {
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState("");
   const [time, setTime] = useState();
 
   useEffect(() => {
-  let d = new Date();
+    let d = new Date();
     let t = d.getHours();
     setTime(t);
-  }, [])
+  }, []);
 
   async function uploadAvatar(e) {
     e.preventDefault();
@@ -25,27 +25,53 @@ export default function AvatarUploadPage() {
       return;
     }
 
-    const formData = new FormData();
-    formData.append("avatar", file);
+    try {
+      const fileName = `${user.id}_${Date.now()}_${file.name}`;
 
-    const res = await fetch("/api/upload-avatar", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
-    });
+      // Завантаження безпосередньо в Supabase Storage
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from("avatars")
+        .upload(fileName, file, { upsert: true });
 
-    const data = await res.json();
-    if (res.ok) {
-      setMessage("Аватар успешно изменен!");
-    } else {
-      setMessage(data.error || "Ошибка загрузки");
+      if (uploadError) throw uploadError;
+
+      // Отримуємо публічний URL
+      const { data: urlData, error: urlError } = supabase.storage
+        .from("avatars")
+        .getPublicUrl(fileName);
+
+      if (urlError) throw urlError;
+
+      const publicUrl = urlData.publicUrl;
+
+      // Викликаємо API для збереження URL у базі
+      const res = await fetch("/api/save-avatar-url", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ userId: user.id, avatar_url: publicUrl }),
+      });
+
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.error || "Помилка збереження аватара");
+      }
+
+      setMessage("Аватар успішно змінено!");
+
+      // Оновлюємо локально avatar_url, щоб зразу показати
+      setUser((prev) => ({ ...prev, avatar_url: publicUrl }));
+    } catch (error) {
+      console.error(error);
+      setMessage(error.message || "Помилка завантаження");
     }
   }
 
   return (
     <>
+      {/* ==== НІЧ ==== */}
       {time >= 0 && time < 6 && (
         <div className={styles.avatar_main_container_night}>
           <h1 className={styles.h1}>Смена аватара</h1>
@@ -56,6 +82,16 @@ export default function AvatarUploadPage() {
               accept="image/*"
               onChange={(e) => setFile(e.target.files?.[0] || null)}
             />
+
+            {/* 🔥 PREVIEW */}
+            {file && (
+              <img
+                src={URL.createObjectURL(file)}
+                alt="preview"
+                className={styles.preview_image}
+              />
+            )}
+
             <button type="submit">Завантажити</button>
           </form>
 
@@ -63,6 +99,8 @@ export default function AvatarUploadPage() {
           <a href="/main">Назад</a>
         </div>
       )}
+
+      {/* ==== РАНОК ==== */}
       {time >= 6 && time < 12 && (
         <div className={styles.avatar_main_container_morning}>
           <h1 className={styles.h1}>Смена аватара</h1>
@@ -73,6 +111,15 @@ export default function AvatarUploadPage() {
               accept="image/*"
               onChange={(e) => setFile(e.target.files?.[0] || null)}
             />
+
+            {file && (
+              <img
+                src={URL.createObjectURL(file)}
+                alt="preview"
+                className={styles.preview_image}
+              />
+            )}
+
             <button type="submit">Завантажити</button>
           </form>
 
@@ -80,6 +127,8 @@ export default function AvatarUploadPage() {
           <a href="/main">Назад</a>
         </div>
       )}
+
+      {/* ==== ДЕНЬ ==== */}
       {time >= 12 && time < 16 && (
         <div className={styles.avatar_main_container_day}>
           <h1 className={styles.h1}>Смена аватара</h1>
@@ -90,6 +139,15 @@ export default function AvatarUploadPage() {
               accept="image/*"
               onChange={(e) => setFile(e.target.files?.[0] || null)}
             />
+
+            {file && (
+              <img
+                src={URL.createObjectURL(file)}
+                alt="preview"
+                className={styles.preview_image}
+              />
+            )}
+
             <button type="submit">Завантажити</button>
           </form>
 
@@ -97,6 +155,8 @@ export default function AvatarUploadPage() {
           <a href="/main">Назад</a>
         </div>
       )}
+
+      {/* ==== ВЕЧІР ==== */}
       {time >= 16 && time < 22 && (
         <div className={styles.avatar_main_container_evening}>
           <h1 className={styles.h1}>Смена аватара</h1>
@@ -111,20 +171,28 @@ export default function AvatarUploadPage() {
                 className={styles.hide}
               />
             </label>
+
             {file && (
               <img
                 src={URL.createObjectURL(file)}
-                alt="Preview"
+                alt="preview"
                 className={styles.preview_image}
               />
             )}
-            <button type="submit" className={styles.submit_evening}>Завантажити</button>
+
+            <button type="submit" className={styles.submit_evening}>
+              Завантажити
+            </button>
           </form>
 
           {message && <p>{message}</p>}
-          <a href="/main" className={styles.link}>Назад</a>
+          <a href="/main" className={styles.link}>
+            Назад
+          </a>
         </div>
       )}
+
+      {/* ==== ЗНОВУ НІЧ ==== */}
       {time >= 22 && time < 24 && (
         <div className={styles.avatar_main_container_night}>
           <h1 className={styles.h1}>Смена аватара</h1>
@@ -135,6 +203,15 @@ export default function AvatarUploadPage() {
               accept="image/*"
               onChange={(e) => setFile(e.target.files?.[0] || null)}
             />
+
+            {file && (
+              <img
+                src={URL.createObjectURL(file)}
+                alt="preview"
+                className={styles.preview_image}
+              />
+            )}
+
             <button type="submit">Завантажити</button>
           </form>
 

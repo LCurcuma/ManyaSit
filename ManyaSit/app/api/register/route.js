@@ -1,5 +1,6 @@
 import pool from "@/lib/db";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export async function POST(req) {
   try {
@@ -21,7 +22,14 @@ export async function POST(req) {
       [username, hash]
     );
 
-    return new Response(JSON.stringify(rows[0]), {
+    const user = rows[0];
+
+    // Create JWT token so frontend can log the new user in right away
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    return new Response(JSON.stringify({ token, user }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });

@@ -24,6 +24,16 @@ export default function RegisterPage() {
         return;
       }
 
+      // Якщо сервер повернув токен — зберігаємо його і логінемо користувача автоматично
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+      }
+
+      // store returned user object as well (if available)
+      if (data.user) {
+        localStorage.setItem("user", JSON.stringify(data.user));
+      }
+
       // Після успішної реєстрації – редірект на MainPage
       router.push("/main"); // якщо твій MainPage.jsx знаходиться за шляхом /app/main/page.jsx
     } catch (err) {
@@ -53,6 +63,5 @@ export default function RegisterPage() {
       {error && <p style={{ color: "red" }}>{error}</p>}
       <a href="/login">Login</a>
     </form>
-  
   );
 }

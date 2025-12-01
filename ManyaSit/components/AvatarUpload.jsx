@@ -9,20 +9,18 @@ export default function AvatarUpload({ onUploaded }) {
     const file = e.target.files[0];
     if (!file) return;
 
-    // Перетворюємо у base64
-    const reader = new FileReader();
-    reader.onloadend = async () => {
-      const base64 = reader.result;
-
+    // Upload the file using multipart/form-data so server route can read `formData.get('avatar')`
+    try {
       const token = localStorage.getItem("token");
+      const formData = new FormData();
+      formData.append("avatar", file);
 
       const res = await fetch("/api/upload-avatar", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ avatarBase64: base64 }),
+        body: formData,
       });
 
       const data = await res.json();
@@ -32,11 +30,13 @@ export default function AvatarUpload({ onUploaded }) {
         return;
       }
 
-      setPreview(base64);
-      if (onUploaded) onUploaded(base64);
-    };
-
-    reader.readAsDataURL(file);
+      // server returns avatar_url (public link) — use it in onUploaded callback
+      setPreview(URL.createObjectURL(file));
+      if (onUploaded) onUploaded(data.avatar_url || null);
+    } catch (err) {
+      console.error(err);
+      setError(err?.message || "Upload failed");
+    }
   }
 
   return (
