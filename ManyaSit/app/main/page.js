@@ -86,7 +86,7 @@ export default function MainPage() {
       <ul>
         {rating.map((u, i) => (
           <li key={u.id}>
-            #{i + 1} — {u.username} — {u.clicks} кліків
+            #{i + 1} — <img height="80" src={u.avatar_url}/> {u.username} — {u.clicks} кліків
           </li>
         ))}
       </ul>
