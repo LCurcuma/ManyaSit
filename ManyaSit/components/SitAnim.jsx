@@ -7,11 +7,32 @@ export default function SitAnim() {
   let [clicks, setClicks] = useState(0);
   const [token, setToken] = useState(null);
   
+
   useEffect(() => {
-    setToken(localStorage.getItem("token")); // ✅ виконується лише на клієнті
+    const t = localStorage.getItem("token");
+    setToken(t);
+
+    if (!t) return;
+
+    async function loadUser() {
+      const res = await fetch("/api/user", {
+        headers: {
+          Authorization: `Bearer ${t}`,
+        },
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setClicks(data.clicks);
+      }
+    }
+
+    loadUser();
   }, []);
 
-    async function changeFrame() {  const token = localStorage.getItem("token");
+  async function changeFrame() {
+    const token = localStorage.getItem("token");
+    
     const res = await fetch("/api/click", {
       method: "POST",
       headers: { 

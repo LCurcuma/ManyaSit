@@ -1,41 +1,51 @@
 import pool from "@/lib/db";
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 export async function POST(req) {
-  const { username, password } = await req.json();
-  const { rows } = await pool.query("SELECT * FROM users WHERE username=$1", [
-    username,
-  ]);
+  try {
+    const { username, password } = await req.json();
 
-  if (!rows[0])
-    return new Response(JSON.stringify({ error: "User not found" }), {
-      status: 400,
+    const { rows } = await pool.query(
+      "SELECT * FROM users WHERE username = $1",
+      [username]
+    );
+
+    if (rows.length === 0) {
+      return new Response(
+        JSON.stringify({ error: "Користувача не знайдено" }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
+
+    const user = rows[0];
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return new Response(JSON.stringify({ error: "Невірний пароль" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    // Створюємо токен
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
     });
 
-  const valid = await bcrypt.compare(password, rows[0].password);
-  if (!valid)
-    return new Response(JSON.stringify({ error: "Invalid password" }), {
-      status: 400,
-    });
-
-  const token = jwt.sign({ userId: rows[0].id }, process.env.JWT_SECRET, {
-    expiresIn: "7d",
-  });
-
-  return new Response(
-    JSON.stringify({
-      token,
-      user: {
-        id: rows[0].id,
-        username: rows[0].username,
-        clicks: rows[0].clicks,
-        avatar_url: rows[0].avatar_url,
-      },
-    }),
-    {
+    return new Response(JSON.stringify({ token }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
-    }
-  );
+    });
+  } catch (err) {
+    console.error("LOGIN ERROR:", err);
+
+    return new Response(JSON.stringify({ error: "Server error" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
 }
