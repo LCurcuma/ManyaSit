@@ -1,7 +1,9 @@
 import jwt from "jsonwebtoken";
 
 export function verifyToken(req) {
-  const authHeader = req.headers.get("authorization");
+  // Забираємо заголовок у будь-якому варіанті
+  const authHeader =
+    req.headers.get("authorization") || req.headers.get("Authorization");
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     throw new Error("No token provided");
@@ -11,7 +13,7 @@ export function verifyToken(req) {
 
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    return payload; // має містити { userId }
+    return payload; // { userId }
   } catch (err) {
     throw new Error("Invalid token");
   }
