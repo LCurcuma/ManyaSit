@@ -15,6 +15,14 @@ export async function POST(req) {
       );
     }
 
+    // enforce simple password policy server-side: minimum length
+    if (String(password).length < 4) {
+      return new Response(
+        JSON.stringify({ error: "Пароль повинен бути не менше 4 символів" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
     const hash = await bcrypt.hash(password, 10);
 
     // Use a sensible default avatar stored in public/avatars/default.png for

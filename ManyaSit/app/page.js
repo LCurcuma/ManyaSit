@@ -11,6 +11,11 @@ export default function RegisterPage() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    // client-side password validation: require at least 4 chars
+    if (String(password).length < 4) {
+      setError("Пароль повинен бути не менше 4 символів");
+      return;
+    }
     try {
       const res = await fetch("/api/register", {
         method: "POST",
