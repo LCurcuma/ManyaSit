@@ -26,7 +26,13 @@ export default function AvatarUploadPage({ setUser, user }) {
     }
 
     try {
-      const fileName = `${user.id}_${Date.now()}_${file.name}`;
+      // Build a safe filename for Supabase. If `user` is present use its id,
+      // otherwise fall back to a random token so we don't crash when user is undefined.
+      const uidPart =
+        user && user.id
+          ? `${user.id}_`
+          : `${Math.random().toString(36).slice(2, 9)}_`;
+      const fileName = `${uidPart}${Date.now()}_${file.name}`;
 
       // Завантаження безпосередньо в Supabase Storage
       const { data: uploadData, error: uploadError } = await supabase.storage
@@ -51,7 +57,9 @@ export default function AvatarUploadPage({ setUser, user }) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ userId: user.id, avatar_url: publicUrl }),
+        // do NOT rely on client-supplied userId. The server will determine
+        // the user from the Authorization token (verifyToken).
+        body: JSON.stringify({ avatar_url: publicUrl }),
       });
 
       if (!res.ok) {
@@ -62,7 +70,22 @@ export default function AvatarUploadPage({ setUser, user }) {
       setMessage("Аватар успішно змінено!");
 
       // Оновлюємо локально avatar_url, щоб зразу показати
-      setUser((prev) => ({ ...prev, avatar_url: publicUrl }));
+      try {
+        // update React state if setter exists
+        if (typeof setUser === "function") {
+          setUser((prev) => ({ ...(prev || {}), avatar_url: publicUrl }));
+        }
+
+        // also persist to localStorage current user object if present
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+          const parsed = JSON.parse(storedUser);
+          parsed.avatar_url = publicUrl;
+          localStorage.setItem("user", JSON.stringify(parsed));
+        }
+      } catch (e) {
+        console.warn("Could not update local user state/storage", e);
+      }
     } catch (error) {
       console.error(error);
       setMessage(error.message || "Помилка завантаження");
@@ -231,7 +254,6 @@ export default function AvatarUploadPage({ setUser, user }) {
                 className={styles.hide}
               />
             </label>
-
             {file && (
               <img
                 src={URL.createObjectURL(file)}
@@ -239,12 +261,15 @@ export default function AvatarUploadPage({ setUser, user }) {
                 className={styles.preview_image}
               />
             )}
-
-            <button type="submit" className={styles.submit_night}>Загрузить</button>
+            <button type="submit" className={styles.submit_night}>
+              Загрузить
+            </button>
           </form>
 
           {message && <p>{message}</p>}
-          <a href="/main" className={styles.link}>Назад</a>
+          <a href="/main" className={styles.link}>
+            Назад
+          </a>
         </div>
       )}
     </>
