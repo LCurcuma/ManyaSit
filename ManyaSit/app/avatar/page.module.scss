@@ -31,15 +31,51 @@
 //night
 
 .avatar_main_container_night{
-    background-color: rgb(37, 27, 50);
+    background: linear-gradient(rgb(20, 15, 26), rgb(76, 50, 92)) ;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: rgb(214, 214, 214);
+    color: rgb(255, 255, 255);
     font-family: main;
     gap: 20px;
+}
+
+.upload_avatar_night{
+    width: 200px;
+    height: 50px;
+    background: rgba(20, 15, 26, 0.5);
+    text-align: center;
+    border: 1px solid rgb(0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.upload_avatar_night:hover{
+    background: rgba(7, 5, 9, 0.5);
+}
+
+.submit_night{
+    width: 200px;
+    height: 50px;
+    background: rgba(20, 15, 26, 0.5);
+    text-align: center;
+    border: 1px solid rgb(0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: main;
+    font-size: 17px;
+}
+
+.submit_night:hover{
+    background: rgba(7, 5, 9, 0.5);
 }
 
 //morning
