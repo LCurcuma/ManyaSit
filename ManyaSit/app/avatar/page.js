@@ -67,7 +67,7 @@ export default function AvatarUploadPage({ setUser, user }) {
         throw new Error(errData.error || "Помилка збереження аватара");
       }
 
-      setMessage("Аватар успішно змінено!");
+      setMessage("Аватар успешно изменен!");
 
       // Оновлюємо локально avatar_url, щоб зразу показати
       try {
@@ -88,7 +88,7 @@ export default function AvatarUploadPage({ setUser, user }) {
       }
     } catch (error) {
       console.error(error);
-      setMessage(error.message || "Помилка завантаження");
+      setMessage(error.message || "Ошибка загрузки");
     }
   }
 
