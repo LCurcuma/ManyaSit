@@ -77,11 +77,15 @@ export default function AvatarUploadPage({ setUser, user }) {
           <h1 className={styles.h1}>Смена аватара</h1>
 
           <form onSubmit={uploadAvatar} className={styles.form}>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setFile(e.target.files?.[0] || null)}
-            />
+            <label className={styles.upload_avatar_night}>
+              Выбрать аватар
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setFile(e.target.files?.[0] || null)}
+                className={styles.hide}
+              />
+            </label>
 
             {/* 🔥 PREVIEW */}
             {file && (
@@ -92,11 +96,15 @@ export default function AvatarUploadPage({ setUser, user }) {
               />
             )}
 
-            <button type="submit">Завантажити</button>
+            <button type="submit" className={styles.submit_night}>
+              Загрузить
+            </button>
           </form>
 
           {message && <p>{message}</p>}
-          <a href="/main">Назад</a>
+          <a href="/main" className={styles.link}>
+            Назад
+          </a>
         </div>
       )}
 
@@ -124,11 +132,15 @@ export default function AvatarUploadPage({ setUser, user }) {
               />
             )}
 
-            <button type="submit" className={styles.submit_morning}>Завантажити</button>
+            <button type="submit" className={styles.submit_morning}>
+              Загрузить
+            </button>
           </form>
 
           {message && <p>{message}</p>}
-          <a href="/main">Назад</a>
+          <a href="/main" className={styles.link}>
+            Назад
+          </a>
         </div>
       )}
 
@@ -138,11 +150,15 @@ export default function AvatarUploadPage({ setUser, user }) {
           <h1 className={styles.h1}>Смена аватара</h1>
 
           <form onSubmit={uploadAvatar} className={styles.form}>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setFile(e.target.files?.[0] || null)}
-            />
+            <label className={styles.upload_avatar_day}>
+              Выбрать аватар
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setFile(e.target.files?.[0] || null)}
+                className={styles.hide}
+              />
+            </label>
 
             {file && (
               <img
@@ -152,11 +168,15 @@ export default function AvatarUploadPage({ setUser, user }) {
               />
             )}
 
-            <button type="submit">Завантажити</button>
+            <button type="submit" className={styles.submit_day}>
+              Загрузить
+            </button>
           </form>
 
           {message && <p>{message}</p>}
-          <a href="/main">Назад</a>
+          <a href="/main" className={styles.link}>
+            Назад
+          </a>
         </div>
       )}
 
@@ -185,7 +205,7 @@ export default function AvatarUploadPage({ setUser, user }) {
             )}
 
             <button type="submit" className={styles.submit_evening}>
-              Завантажити
+              Загрузить
             </button>
           </form>
 
@@ -202,11 +222,15 @@ export default function AvatarUploadPage({ setUser, user }) {
           <h1 className={styles.h1}>Смена аватара</h1>
 
           <form onSubmit={uploadAvatar} className={styles.form}>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setFile(e.target.files?.[0] || null)}
-            />
+            Выбрать аватар
+            <label className={styles.upload_avatar_night}>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setFile(e.target.files?.[0] || null)}
+                className={styles.hide}
+              />
+            </label>
 
             {file && (
               <img
@@ -216,11 +240,11 @@ export default function AvatarUploadPage({ setUser, user }) {
               />
             )}
 
-            <button type="submit">Завантажити</button>
+            <button type="submit" className={styles.submit_night}>Загрузить</button>
           </form>
 
           {message && <p>{message}</p>}
-          <a href="/main">Назад</a>
+          <a href="/main" className={styles.link}>Назад</a>
         </div>
       )}
     </>

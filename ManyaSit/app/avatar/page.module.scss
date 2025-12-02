@@ -95,15 +95,51 @@
 //day
 
 .avatar_main_container_day{
-    background-color: rgb(191, 241, 255);
+    background: linear-gradient(rgb(191, 241, 255), rgb(121, 193, 255));
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: rgb(32, 28, 35);
+    color: rgb(255, 255, 255);
     font-family: main;
     gap: 20px;
+}
+
+.upload_avatar_day{
+    width: 200px;
+    height: 50px;
+    background: rgba(75, 171, 255, 0.5);
+    text-align: center;
+    border: 1px solid rgb(31, 23, 118);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.upload_avatar_day:hover{
+    background: rgba(56, 141, 215, 0.5);
+}
+
+.submit_day{
+    width: 200px;
+    height: 50px;
+    background: rgba(75, 171, 255, 0.5);
+    text-align: center;
+    border: 1px solid rgb(31, 23, 118);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: main;
+    font-size: 17px;
+}
+
+.submit_day:hover{
+    background: rgba(56, 141, 215, 0.5);
 }
 
 //evening
