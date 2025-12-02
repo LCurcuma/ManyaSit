@@ -106,11 +106,15 @@ export default function AvatarUploadPage({ setUser, user }) {
           <h1 className={styles.h1}>Смена аватара</h1>
 
           <form onSubmit={uploadAvatar} className={styles.form}>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setFile(e.target.files?.[0] || null)}
-            />
+            <label className={styles.upload_avatar_morning}>
+              Выбрать аватар
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setFile(e.target.files?.[0] || null)}
+                className={styles.hide}
+              />
+            </label>
 
             {file && (
               <img
@@ -120,7 +124,7 @@ export default function AvatarUploadPage({ setUser, user }) {
               />
             )}
 
-            <button type="submit">Завантажити</button>
+            <button type="submit" className={styles.submit_morning}>Завантажити</button>
           </form>
 
           {message && <p>{message}</p>}

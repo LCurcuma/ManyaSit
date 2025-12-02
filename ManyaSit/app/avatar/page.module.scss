@@ -45,15 +45,51 @@
 //morning
 
 .avatar_main_container_morning{
-    background-color: rgb(232, 218, 255);
+    background: linear-gradient(rgb(148, 138, 255), rgb(218, 243, 255)) ;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: rgb(32, 28, 35);
+    color: rgb(255, 255, 255);
     font-family: main;
     gap: 20px;
+}
+
+.upload_avatar_morning{
+    width: 200px;
+    height: 50px;
+    background: rgba(148, 138, 255, 0.5);
+    text-align: center;
+    border: 1px solid rgb(31, 23, 118);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.upload_avatar_morning:hover{
+    background: rgba(116, 106, 219, 0.5);
+}
+
+.submit_morning{
+    width: 200px;
+    height: 50px;
+    background: rgba(148, 138, 255, 0.5);
+    text-align: center;
+    border: 1px solid rgb(31, 23, 118);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: main;
+    font-size: 17px;
+}
+
+.submit_morning:hover{
+    background: rgba(116, 106, 219, 0.5);
 }
 
 //day
