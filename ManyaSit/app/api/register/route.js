@@ -17,9 +17,13 @@ export async function POST(req) {
 
     const hash = await bcrypt.hash(password, 10);
 
+    // Use a sensible default avatar stored in public/avatars/default.png for
+    // newly created accounts so frontend always has an image path to display.
+    const defaultAvatar = "/avatars/default.png";
+
     const { rows } = await pool.query(
-      "INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id, username, clicks, avatar_url",
-      [username, hash]
+      "INSERT INTO users (username, password, avatar_url) VALUES ($1, $2, $3) RETURNING id, username, clicks, avatar_url",
+      [username, hash, defaultAvatar]
     );
 
     const user = rows[0];

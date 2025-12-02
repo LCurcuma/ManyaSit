@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import SitAnim from "../../components/SitAnim";
+import LogoutButton from "../../components/Logout";
 
 export default function MainPage() {
   const [user, setUser] = useState(null);
@@ -81,6 +82,9 @@ export default function MainPage() {
           <p>Нік: {user.username}</p>
           <p>Кліків: {user.clicks}</p>
           <p>Місце в рейтингу: {myPlace}</p>
+
+          {/* logout action clears localStorage and resets state */}
+          <LogoutButton onLogout={() => setUser(null)} />
         </div>
       )}
 
