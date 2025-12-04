@@ -38,6 +38,8 @@ export default function LoginPage() {
 
       // If we have a token but no stored user, try to restore user info
       // from the server (/api/me). If successful, save user and redirect.
+      // If /api/me fails (expired token, user not found, server error),
+      // clear the token and stay on login page so user can log in again.
       if (token && !user) {
         (async () => {
           try {
@@ -45,18 +47,25 @@ export default function LoginPage() {
               headers: { Authorization: `Bearer ${token}` },
             });
             if (!res.ok) {
-              // invalid/expired token — remove it to avoid repeated attempts
-              if (res.status === 401) localStorage.removeItem("token");
+              // Any error (401, 404, 500) means token is invalid or user doesn't exist.
+              // Clear token and stay on login page for user to log in again.
+              localStorage.removeItem("token");
               return;
             }
 
             const data = await res.json();
-            if (data && data.user) {
-              localStorage.setItem("user", JSON.stringify(data.user));
+            if (data && data.id) {
+              // Successfully restored user from server
+              localStorage.setItem("user", JSON.stringify(data));
               router.push("/main");
+            } else {
+              // Response was 200 but no user data — clear token and stay
+              localStorage.removeItem("token");
             }
           } catch (err) {
             console.warn("Failed to restore user from /api/me", err);
+            // On network error, also clear the potentially invalid token
+            localStorage.removeItem("token");
           }
         })();
       }

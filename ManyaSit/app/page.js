@@ -36,6 +36,8 @@ export default function RegisterPage() {
       }
 
       // If token exists but user info is missing, attempt to restore via /api/me
+      // If /api/me fails (expired token, user not found, server error),
+      // clear the token and stay on register page so user can log in again.
       if (token && !user) {
         (async () => {
           try {
@@ -43,17 +45,25 @@ export default function RegisterPage() {
               headers: { Authorization: `Bearer ${token}` },
             });
             if (!res.ok) {
-              if (res.status === 401) localStorage.removeItem("token");
+              // Any error (401, 404, 500) means token is invalid or user doesn't exist.
+              // Clear token and stay on register page for user to log in again.
+              localStorage.removeItem("token");
               return;
             }
 
             const data = await res.json();
-            if (data && data.user) {
-              localStorage.setItem("user", JSON.stringify(data.user));
+            if (data && data.id) {
+              // Successfully restored user from server
+              localStorage.setItem("user", JSON.stringify(data));
               router.push("/main");
+            } else {
+              // Response was 200 but no user data — clear token and stay
+              localStorage.removeItem("token");
             }
           } catch (err) {
             console.warn("Failed to restore user from /api/me", err);
+            // On network error, also clear the potentially invalid token
+            localStorage.removeItem("token");
           }
         })();
       }
