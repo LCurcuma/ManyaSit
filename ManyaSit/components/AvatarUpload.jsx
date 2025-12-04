@@ -43,7 +43,7 @@ export default function AvatarUpload({ onUploaded }) {
     <div>
       <input type="file" accept="image/*" onChange={handleFile} />
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p style={{ color: "white" }}>{error}</p>}
 
       {preview && (
         <img

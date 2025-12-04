@@ -48,7 +48,7 @@
     height: 50px;
     background: rgba(20, 15, 26, 0.5);
     text-align: center;
-    border: 1px solid rgb(0, 0, 0);
+    border: 1px solid rgb(255, 255, 255);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -65,7 +65,7 @@
     height: 50px;
     background: rgba(20, 15, 26, 0.5);
     text-align: center;
-    border: 1px solid rgb(0, 0, 0);
+    border: 1px solid rgb(255, 255, 255);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -188,7 +188,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: rgb(255, 224, 173);
+    color: rgb(255, 255, 255);
     font-family: main;
     gap: 20px;
 }
@@ -198,7 +198,7 @@
     height: 50px;
     background: rgba(69, 12, 38, 0.5);
     text-align: center;
-    border: 1px solid rgb(237, 195, 129);
+    border: 1px solid rgb(255, 255, 255);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -215,14 +215,14 @@
     height: 50px;
     background: rgba(69, 12, 38, 0.5);
     text-align: center;
-    border: 1px solid rgb(237, 195, 129);
+    border: 1px solid rgb(255, 255, 255);
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50px;
     cursor: pointer;
     font-family: main;
-    color: rgb(255, 224, 173);
+    color: rgb(255, 255, 255);
     font-size: 17px;
 }
 
