@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
@@ -8,6 +8,53 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter(); // хук для редіректу
+
+  // on mount: if already authenticated, redirect to /main unless user just logged out
+  useEffect(() => {
+    try {
+      const justLoggedOut = localStorage.getItem("justLoggedOut");
+      if (justLoggedOut) {
+        localStorage.removeItem("justLoggedOut");
+        return;
+      }
+
+      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+
+      // Only redirect when both token and user data are present. This
+      // prevents redirecting to /main when the app has no account info
+      // (which would render an empty main page).
+      if (token && user) {
+        router.push("/main");
+        return;
+      }
+
+      // If token exists but user info is missing, attempt to restore via /api/me
+      if (token && !user) {
+        (async () => {
+          try {
+            const res = await fetch("/api/me", {
+              headers: { Authorization: `Bearer ${token}` },
+            });
+            if (!res.ok) {
+              if (res.status === 401) localStorage.removeItem("token");
+              return;
+            }
+
+            const data = await res.json();
+            if (data && data.user) {
+              localStorage.setItem("user", JSON.stringify(data.user));
+              router.push("/main");
+            }
+          } catch (err) {
+            console.warn("Failed to restore user from /api/me", err);
+          }
+        })();
+      }
+    } catch (e) {
+      console.warn("Register mount check failed", e);
+    }
+  }, []);
 
   const handleRegister = async (e) => {
     e.preventDefault();

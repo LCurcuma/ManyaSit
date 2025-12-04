@@ -8,11 +8,13 @@ export default function LogoutButton({ onLogout } = {}) {
 
   function doLogout() {
     try {
+      // mark that the user intentionally logged out so login/register
+      // pages can avoid auto-redirecting back to /main
+      localStorage.setItem("justLoggedOut", "1");
       localStorage.removeItem("token");
       localStorage.removeItem("user");
     } catch (e) {
-      // ignore storage errors, still continue
-      console.warn("logout: localStorage clear failed", e);
+      console.warn("logout: localStorage operation failed", e);
     }
 
     if (typeof onLogout === "function") onLogout();
@@ -22,7 +24,11 @@ export default function LogoutButton({ onLogout } = {}) {
   }
 
   return (
-    <button onClick={doLogout} style={{ marginLeft: 12 }} className={styles.btn}>
+    <button
+      onClick={doLogout}
+      style={{ marginLeft: 12 }}
+      className={styles.btn}
+    >
       Выйти
     </button>
   );
