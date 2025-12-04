@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import styles from "./page.module.scss";
 
 export default function SitAnim({ onClickUpdate }) {
   const [frame, setFrame] = useState(1);
@@ -32,11 +33,10 @@ export default function SitAnim({ onClickUpdate }) {
   }
 
   return (
-    <div onClick={changeFrame}>
-      {frame === 1 && <img src="/sit1.png" />}
-      {frame === 2 && <img src="/sit.png" />}
-      {frame === 3 && <img src="/sit2.png" />}
-      <p>{clicks}</p>
+    <div onClick={changeFrame} className={styles.anim}>
+      {frame === 1 && <img src="/sit1.png" className={styles.img} />}
+      {frame === 2 && <img src="/sit.png" className={styles.img} />}
+      {frame === 3 && <img src="/sit2.png" className={styles.img} />}
     </div>
   );
 }

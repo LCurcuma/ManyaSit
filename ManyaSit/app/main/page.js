@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import SitAnim from "../../components/SitAnim";
-import LogoutButton from "../../components/Logout";
+import SitAnim from "../../components/SitAnim/SitAnim";
+import LogoutButton from "../../components/LogoutButton/Logout";
 import styles from "./page.module.scss";
 
 export default function MainPage() {
@@ -68,162 +68,122 @@ export default function MainPage() {
     <>
       {time >= 0 && time < 6 && (
         <div className={styles.night}>
-          {user && (
-            <div className={styles.profile_with_avatar}>
-              <a href="/avatar" className={styles.avatar}>
-                {user.avatar_url ? (
-                  <img
-                    key={user.avatar_url} // ключ змушує React оновити картинку
-                    src={user.avatar_url}
-                    alt="Аватар"
-                    className={styles.profile_pic}
-                  />
-                ) : (
-                  <div style={{ width: 80, height: 80, background: "#ccc" }} />
-                )}
-              </a>
-              <div className={styles.profile_text}>
-                <p>Нік: {user.username}</p>
-                <p>Кліків: {user.clicks}</p>
-                <p>Місце в рейтингу: {myPlace}</p>
-              </div>
-
-              {/* logout action clears localStorage and resets state */}
-              <LogoutButton onLogout={() => setUser(null)} />
-            </div>
-          )}
-
-          {/* Передаємо функцію оновлення у SitAnim */}
-          <SitAnim onClickUpdate={loadMeAndRating} />
-
-          <h2>Рейтинг</h2>
-          <ul>
-            {rating.map((u, i) => (
-              <li key={u.id}>
-                #{i + 1} —{" "}
-                {u.avatar_url && (
-                  <img
-                    key={u.avatar_url}
-                    src={u.avatar_url}
-                    alt="Avatar"
-                    width={40}
-                    height={40}
-                    style={{ marginRight: 8 }}
-                  />
-                )}{" "}
-                {u.username} — {u.clicks} кліків
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {time >= 6 && time < 12 && (
-        <div className={styles.morning}>
-          {user && (
-            <div className={styles.profile_with_avatar}>
-              <a href="/avatar" className={styles.avatar}>
-                {user.avatar_url ? (
-                  <img
-                    key={user.avatar_url} // ключ змушує React оновити картинку
-                    src={user.avatar_url}
-                    alt="Аватар"
-                    className={styles.profile_pic}
-                  />
-                ) : (
-                  <div style={{ width: 80, height: 80, background: "#ccc" }} />
-                )}
-              </a>
-              <div>
-                <p>Нік: {user.username}</p>
-                <p>Кліків: {user.clicks}</p>
-                <p>Місце в рейтингу: {myPlace}</p>
-              </div>
-
-              {/* logout action clears localStorage and resets state */}
-              <LogoutButton onLogout={() => setUser(null)} />
-            </div>
-          )}
-
-          {/* Передаємо функцію оновлення у SitAnim */}
-          <SitAnim onClickUpdate={loadMeAndRating} />
-
-          <h2>Рейтинг</h2>
-          <ul>
-            {rating.map((u, i) => (
-              <li key={u.id}>
-                #{i + 1} —{" "}
-                {u.avatar_url && (
-                  <img
-                    key={u.avatar_url}
-                    src={u.avatar_url}
-                    alt="Avatar"
-                    width={40}
-                    height={40}
-                    style={{ marginRight: 8 }}
-                  />
-                )}{" "}
-                {u.username} — {u.clicks} кліків
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {time >= 12 && time < 16 && (
-        <div className={styles.day}>
-          {user && (
-            <div className={styles.profile_with_avatar}>
-              <a href="/avatar" className={styles.avatar}>
-                {user.avatar_url ? (
-                  <img
-                    key={user.avatar_url} // ключ змушує React оновити картинку
-                    src={user.avatar_url}
-                    alt="Аватар"
-                    className={styles.profile_pic}
-                  />
-                ) : (
-                  <div style={{ width: 80, height: 80, background: "#ccc" }} />
-                )}
-              </a>
-              <div>
-                <p>Нік: {user.username}</p>
-                <p>Кліків: {user.clicks}</p>
-                <p>Місце в рейтингу: {myPlace}</p>
-              </div>
-
-              {/* logout action clears localStorage and resets state */}
-              <LogoutButton onLogout={() => setUser(null)} />
-            </div>
-          )}
-
-          {/* Передаємо функцію оновлення у SitAnim */}
-          <SitAnim onClickUpdate={loadMeAndRating} />
-
-          <h2>Рейтинг</h2>
-          <ul>
-            {rating.map((u, i) => (
-              <li key={u.id}>
-                #{i + 1} —{" "}
-                {u.avatar_url && (
-                  <img
-                    key={u.avatar_url}
-                    src={u.avatar_url}
-                    alt="Avatar"
-                    width={40}
-                    height={40}
-                    style={{ marginRight: 8 }}
-                  />
-                )}{" "}
-                {u.username} — {u.clicks} приседаний
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {time >= 16 && time < 22 && (
-        <div className={styles.evening}>
+          <div className={styles.snow_container}>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+          </div>
           {user && (
             <div className={styles.profile_with_avatar}>
               <a href="/avatar" className={styles.avatar}>
@@ -252,11 +212,11 @@ export default function MainPage() {
           {/* Передаємо функцію оновлення у SitAnim */}
           <SitAnim onClickUpdate={loadMeAndRating} />
 
-          <h2>Рейтинг</h2>
-          <ul>
+          <h2 className={styles.h2}>Рейтинг</h2>
+          <ul className={styles.rating}>
             {rating.map((u, i) => (
-              <li key={u.id}>
-                #{i + 1} —{" "}
+              <li key={u.id} className={styles.li}>
+                <span className={styles.number}>#{i + 1}</span>
                 {u.avatar_url && (
                   <img
                     key={u.avatar_url}
@@ -266,16 +226,134 @@ export default function MainPage() {
                     height={40}
                     style={{ marginRight: 8 }}
                   />
-                )}{" "}
-                {u.username} — {u.clicks} кліків
+                )}
+                <span className={styles.clicks}>
+                  {u.username} — {u.clicks} приседаний
+                </span>
               </li>
             ))}
           </ul>
         </div>
       )}
 
-      {time >= 22 && time < 24 && (
-        <div className={styles.night}>
+      {time >= 6 && time < 12 && (
+        <div className={styles.morning}>
+          <div className={styles.snow_container}>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+          </div>
           {user && (
             <div className={styles.profile_with_avatar}>
               <a href="/avatar" className={styles.avatar}>
@@ -290,7 +368,517 @@ export default function MainPage() {
                   <div style={{ width: 80, height: 80, background: "#ccc" }} />
                 )}
               </a>
-              <div>
+              <div className={styles.profile_text}>
+                <p>Имя: {user.username}</p>
+                <p>Приседаний: {user.clicks}</p>
+                <p>Место в рейтинге: {myPlace}</p>
+              </div>
+
+              {/* logout action clears localStorage and resets state */}
+              <LogoutButton onLogout={() => setUser(null)} />
+            </div>
+          )}
+
+          {/* Передаємо функцію оновлення у SitAnim */}
+          <SitAnim onClickUpdate={loadMeAndRating} />
+
+          <h2 className={styles.h2}>Рейтинг</h2>
+          <ul className={styles.rating}>
+            {rating.map((u, i) => (
+              <li key={u.id} className={styles.li}>
+                <span className={styles.number}>#{i + 1}</span>
+                {u.avatar_url && (
+                  <img
+                    key={u.avatar_url}
+                    src={u.avatar_url}
+                    alt="Avatar"
+                    width={40}
+                    height={40}
+                    style={{ marginRight: 8 }}
+                  />
+                )}
+                <span className={styles.clicks}>
+                  {u.username} — {u.clicks} приседаний
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {time >= 12 && time < 16 && (
+        <div className={styles.day}>
+          <div className={styles.snow_container}>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+          </div>
+          {user && (
+            <div className={styles.profile_with_avatar}>
+              <a href="/avatar" className={styles.avatar}>
+                {user.avatar_url ? (
+                  <img
+                    key={user.avatar_url} // ключ змушує React оновити картинку
+                    src={user.avatar_url}
+                    alt="Аватар"
+                    className={styles.profile_pic}
+                  />
+                ) : (
+                  <div style={{ width: 80, height: 80, background: "#ccc" }} />
+                )}
+              </a>
+              <div className={styles.profile_text}>
+                <p>Имя: {user.username}</p>
+                <p>Приседаний: {user.clicks}</p>
+                <p>Место в рейтинге: {myPlace}</p>
+              </div>
+
+              {/* logout action clears localStorage and resets state */}
+              <LogoutButton onLogout={() => setUser(null)} />
+            </div>
+          )}
+
+          {/* Передаємо функцію оновлення у SitAnim */}
+          <SitAnim onClickUpdate={loadMeAndRating} />
+
+          <h2 className={styles.h2}>Рейтинг</h2>
+          <ul className={styles.rating}>
+            {rating.map((u, i) => (
+              <li key={u.id} className={styles.li}>
+                <span className={styles.number}>#{i + 1}</span>
+                {u.avatar_url && (
+                  <img
+                    key={u.avatar_url}
+                    src={u.avatar_url}
+                    alt="Avatar"
+                    width={40}
+                    height={40}
+                    style={{ marginRight: 8 }}
+                  />
+                )}
+                <span className={styles.clicks}>
+                  {u.username} — {u.clicks} приседаний
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {time >= 16 && time < 22 && (
+        <div className={styles.evening}>
+          <div className={styles.snow_container}>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+          </div>
+          {user && (
+            <div className={styles.profile_with_avatar}>
+              <a href="/avatar" className={styles.avatar}>
+                {user.avatar_url ? (
+                  <img
+                    key={user.avatar_url} // ключ змушує React оновити картинку
+                    src={user.avatar_url}
+                    alt="Аватар"
+                    className={styles.profile_pic}
+                  />
+                ) : (
+                  <div style={{ width: 80, height: 80, background: "#ccc" }} />
+                )}
+              </a>
+              <div className={styles.profile_text}>
+                <p>Имя: {user.username}</p>
+                <p>Приседаний: {user.clicks}</p>
+                <p>Место в рейтинге: {myPlace}</p>
+              </div>
+
+              {/* logout action clears localStorage and resets state */}
+              <LogoutButton onLogout={() => setUser(null)} />
+            </div>
+          )}
+
+          {/* Передаємо функцію оновлення у SitAnim */}
+          <SitAnim onClickUpdate={loadMeAndRating} />
+
+          <h2 className={styles.h2}>Рейтинг</h2>
+          <ul className={styles.rating}>
+            {rating.map((u, i) => (
+              <li key={u.id} className={styles.li}>
+                <span className={styles.number}>#{i + 1}</span>
+                {u.avatar_url && (
+                  <img
+                    key={u.avatar_url}
+                    src={u.avatar_url}
+                    alt="Avatar"
+                    width={40}
+                    height={40}
+                    style={{ marginRight: 8 }}
+                  />
+                )}
+                <span className={styles.clicks}>
+                  {u.username} — {u.clicks} приседаний
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {time >= 22 && time < 24 && (
+        <div className={styles.night}>
+          <div className={styles.snow_container}>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+          </div>
+          {user && (
+            <div className={styles.profile_with_avatar}>
+              <a href="/avatar" className={styles.avatar}>
+                {user.avatar_url ? (
+                  <img
+                    key={user.avatar_url} // ключ змушує React оновити картинку
+                    src={user.avatar_url}
+                    alt="Аватар"
+                    className={styles.profile_pic}
+                  />
+                ) : (
+                  <div style={{ width: 80, height: 80, background: "#ccc" }} />
+                )}
+              </a>
+              <div className={styles.profile_text}>
                 <p>Имя: {user.username}</p>
                 <p>Приседания: {user.clicks}</p>
                 <p>Место в рейтинге: {myPlace}</p>
@@ -304,11 +892,11 @@ export default function MainPage() {
           {/* Передаємо функцію оновлення у SitAnim */}
           <SitAnim onClickUpdate={loadMeAndRating} />
 
-          <h2>Рейтинг</h2>
-          <ul>
+          <h2 className={styles.h2}>Рейтинг</h2>
+          <ul className={styles.rating}>
             {rating.map((u, i) => (
-              <li key={u.id}>
-                #{i + 1} —{" "}
+              <li key={u.id} className={styles.li}>
+                <span className={styles.number}>#{i + 1}</span>
                 {u.avatar_url && (
                   <img
                     key={u.avatar_url}
@@ -318,8 +906,10 @@ export default function MainPage() {
                     height={40}
                     style={{ marginRight: 8 }}
                   />
-                )}{" "}
-                {u.username} — {u.clicks} кліків
+                )}
+                <span className={styles.clicks}>
+                  {u.username} — {u.clicks} приседаний
+                </span>
               </li>
             ))}
           </ul>

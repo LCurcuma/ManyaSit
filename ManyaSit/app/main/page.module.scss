@@ -4,7 +4,7 @@
 }
 
 @mixin breakpoint($breakpoint) {
-  @media (min-width: $breakpoint) {
+  @media (max-width: $breakpoint) {
     @content;
   }
 }
@@ -18,13 +18,20 @@
     display: flex;
     margin-left: auto;
     min-width: 100%;
-    //background: rgba(255, 255, 255, 0.196);
+    background: rgba(38, 6, 62, 0.196);
     justify-content: end;
     gap: 10px;
     padding-right: 20px;
+    padding-left: 0;
     padding-top: 15px;
     padding-bottom: 10px;
     font-family: main;
+
+    @include breakpoint(600px){
+      padding-top: 20px;
+      padding-left: 20px;
+      justify-content: center;
+    }
 }
 
 .profile_pic{
@@ -43,12 +50,101 @@
   line-height: 1.5;
 }
 
-//night
+.h2{
+  font-size: 32px;
+}
 
+.rating{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  background: rgba(31, 0, 94, 0.105);
+  padding: 30px 100px 35px 100px;
+  margin-bottom: 50px;
+  border-radius: 20px;
+  font-size: 18px;
+  list-style-type: none;
+
+  @include breakpoint(600px){
+    margin-bottom: 0;
+    padding: 30px 30px 50px 30px;
+  }
+}
+
+.li{
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-column-start: 0;
+  align-content: start;
+  gap: 10px;
+
+
+}
+
+.clicks{
+  text-align: end;
+  width: 200px;
+
+  @include breakpoint(600px){
+    width: 190px;
+  }
+}
+
+.number{
+  width: 50px;
+  border-right: 1px solid white;
+  margin-right: 20px;
+  margin-left: -20px;
+
+  @include breakpoint(600px){
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+
+//night
+.night{
+  background: linear-gradient(rgb(20, 15, 26), rgb(76, 50, 92));
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  color: white;
+  filter: drop-shadow(0 0 10px white);
+    font-family: main;
+}
 
 //morning
+.morning{
+  background: linear-gradient(rgb(148, 138, 255), rgb(218, 243, 255));
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  color: white;
+  filter: drop-shadow(0 0 10px white);
+    font-family: main;
+}
 
 //day
+.day{
+  background: linear-gradient(rgb(191, 241, 255), rgb(121, 193, 255));
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  color: white;
+  filter: drop-shadow(0 0 10px white);
+    font-family: main;
+}
 
 //evening
 .evening{
@@ -59,4 +155,60 @@
   justify-content: center;
   align-items: center;
   gap: 20px;
+  color: white;
+  filter: drop-shadow(0 0 10px white);
+    font-family: main;
+}
+
+
+//snow
+@function random_range($min, $max) {
+  $rand: random();
+  $random_range: $min + floor($rand * (($max - $min) + 1));
+  @return $random_range;
+}
+
+
+.snow_container{
+position: absolute;
+top: 0;
+left: 0;
+min-height: 100vh;
+}
+
+.snow {
+  $total: 200;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+
+  @for $i from 1 through $total {
+    $random-x: random(1000000) * 0.0001vw;
+    $random-offset: random_range(-100000, 100000) * 0.0001vw;
+    $random-x-end: $random-x + $random-offset;
+    $random-x-end-yoyo: $random-x + ($random-offset / 2);
+    $random-yoyo-time: random_range(30000, 80000) / 100000;
+    $random-yoyo-y: $random-yoyo-time * 100vh;
+    $random-scale: random(10000) * 0.0001;
+    $fall-duration: random_range(10, 30) * 1s;
+    $fall-delay: random(30) * -1s;
+
+    &:nth-child(#{$i}) {
+      opacity: random(10000) * 0.0001;
+      transform: translate($random-x, -10px) scale($random-scale);
+      animation: fall-#{$i} $fall-duration $fall-delay linear infinite;
+    }
+
+    @keyframes fall-#{$i} {
+      #{percentage($random-yoyo-time)} {
+        transform: translate($random-x-end, $random-yoyo-y) scale($random-scale);
+      }
+
+      to {
+        transform: translate($random-x-end-yoyo, 100vh) scale($random-scale);
+      }
+    }
+  }
 }

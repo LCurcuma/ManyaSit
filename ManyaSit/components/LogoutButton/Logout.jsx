@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import styles from "./page.module.scss";
 
 export default function LogoutButton({ onLogout } = {}) {
   const router = useRouter();
@@ -21,8 +22,8 @@ export default function LogoutButton({ onLogout } = {}) {
   }
 
   return (
-    <button onClick={doLogout} style={{ marginLeft: 12 }}>
-      Вийти
+    <button onClick={doLogout} style={{ marginLeft: 12 }} className={styles.btn}>
+      Выйти
     </button>
   );
 }
