@@ -76,20 +76,20 @@
 
 .li{
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: auto auto auto auto auto;
   grid-column-start: 0;
-  align-content: start;
+  align-content: end;
   gap: 10px;
-
-
 }
 
 .clicks{
   text-align: end;
   width: 200px;
+  font-size: 18px;
 
   @include breakpoint(600px){
     width: 190px;
+    font-size: 16px;
   }
 }
 
@@ -103,6 +103,13 @@
     margin-right: 0;
     margin-left: 0;
   }
+}
+
+.avatar_nickname{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 5px;
 }
 
 //night

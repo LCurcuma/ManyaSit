@@ -228,19 +228,20 @@ export default function MainPage() {
             {rating.map((u, i) => (
               <li key={u.id} className={styles.li}>
                 <span className={styles.number}>#{i + 1}</span>
-                {u.avatar_url && (
-                  <img
-                    key={u.avatar_url}
-                    src={u.avatar_url}
-                    alt="Avatar"
-                    width={40}
-                    height={40}
-                    style={{ marginRight: 8 }}
-                  />
-                )}
-                <span className={styles.clicks}>
-                  {u.username} — {u.clicks} приседаний
-                </span>
+                <div className={styles.avatar_nickname}>
+                  {u.avatar_url && (
+                    <img
+                      key={u.avatar_url}
+                      src={u.avatar_url}
+                      alt="Avatar"
+                      width={40}
+                      height={40}
+                      style={{ marginRight: 8 }}
+                    />
+                  )}
+                  <span>{u.username}</span>
+                </div>
+                <span className={styles.clicks}>{u.clicks} приседаний</span>
               </li>
             ))}
           </ul>
@@ -398,19 +399,20 @@ export default function MainPage() {
             {rating.map((u, i) => (
               <li key={u.id} className={styles.li}>
                 <span className={styles.number}>#{i + 1}</span>
-                {u.avatar_url && (
-                  <img
-                    key={u.avatar_url}
-                    src={u.avatar_url}
-                    alt="Avatar"
-                    width={40}
-                    height={40}
-                    style={{ marginRight: 8 }}
-                  />
-                )}
-                <span className={styles.clicks}>
-                  {u.username} — {u.clicks} приседаний
-                </span>
+                <div className={styles.avatar_nickname}>
+                  {u.avatar_url && (
+                    <img
+                      key={u.avatar_url}
+                      src={u.avatar_url}
+                      alt="Avatar"
+                      width={40}
+                      height={40}
+                      style={{ marginRight: 8 }}
+                    />
+                  )}
+                  <span>{u.username}</span>
+                </div>
+                <span className={styles.clicks}>{u.clicks} приседаний</span>
               </li>
             ))}
           </ul>
@@ -568,19 +570,20 @@ export default function MainPage() {
             {rating.map((u, i) => (
               <li key={u.id} className={styles.li}>
                 <span className={styles.number}>#{i + 1}</span>
-                {u.avatar_url && (
-                  <img
-                    key={u.avatar_url}
-                    src={u.avatar_url}
-                    alt="Avatar"
-                    width={40}
-                    height={40}
-                    style={{ marginRight: 8 }}
-                  />
-                )}
-                <span className={styles.clicks}>
-                  {u.username} — {u.clicks} приседаний
-                </span>
+                <div className={styles.avatar_nickname}>
+                  {u.avatar_url && (
+                    <img
+                      key={u.avatar_url}
+                      src={u.avatar_url}
+                      alt="Avatar"
+                      width={40}
+                      height={40}
+                      style={{ marginRight: 8 }}
+                    />
+                  )}
+                  <span>{u.username}</span>
+                </div>
+                <span className={styles.clicks}>{u.clicks} приседаний</span>
               </li>
             ))}
           </ul>
@@ -738,19 +741,20 @@ export default function MainPage() {
             {rating.map((u, i) => (
               <li key={u.id} className={styles.li}>
                 <span className={styles.number}>#{i + 1}</span>
-                {u.avatar_url && (
-                  <img
-                    key={u.avatar_url}
-                    src={u.avatar_url}
-                    alt="Avatar"
-                    width={40}
-                    height={40}
-                    style={{ marginRight: 8 }}
-                  />
-                )}
-                <span className={styles.clicks}>
-                  {u.username} — {u.clicks} приседаний
-                </span>
+                <div className={styles.avatar_nickname}>
+                  {u.avatar_url && (
+                    <img
+                      key={u.avatar_url}
+                      src={u.avatar_url}
+                      alt="Avatar"
+                      width={40}
+                      height={40}
+                      style={{ marginRight: 8 }}
+                    />
+                  )}
+                  <span>{u.username}</span>
+                </div>
+                <span className={styles.clicks}>{u.clicks} приседаний</span>
               </li>
             ))}
           </ul>
@@ -908,19 +912,20 @@ export default function MainPage() {
             {rating.map((u, i) => (
               <li key={u.id} className={styles.li}>
                 <span className={styles.number}>#{i + 1}</span>
-                {u.avatar_url && (
-                  <img
-                    key={u.avatar_url}
-                    src={u.avatar_url}
-                    alt="Avatar"
-                    width={40}
-                    height={40}
-                    style={{ marginRight: 8 }}
-                  />
-                )}
-                <span className={styles.clicks}>
-                  {u.username} — {u.clicks} приседаний
-                </span>
+                <div className={styles.avatar_nickname}>
+                  {u.avatar_url && (
+                    <img
+                      key={u.avatar_url}
+                      src={u.avatar_url}
+                      alt="Avatar"
+                      width={40}
+                      height={40}
+                      style={{ marginRight: 8 }}
+                    />
+                  )}
+                  <span>{u.username}</span>
+                </div>
+                <span className={styles.clicks}>{u.clicks} приседаний</span>
               </li>
             ))}
           </ul>
