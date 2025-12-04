@@ -98,7 +98,7 @@ export default function LoginPage() {
       {time >= 0 && time < 6 && (
         <div className={styles.night}>
           <form onSubmit={handleLogin} className={styles.form}>
-            <h1>Логін</h1>
+            <h1>Логин</h1>
             <input
               type="text"
               placeholder="Имя"
@@ -129,7 +129,7 @@ export default function LoginPage() {
       {time >= 6 && time < 12 && (
         <div className={styles.morning}>
           <form onSubmit={handleLogin} className={styles.form}>
-            <h1>Логін</h1>
+            <h1>Логин</h1>
             <input
               type="text"
               placeholder="Имя"
@@ -160,7 +160,7 @@ export default function LoginPage() {
       {time >= 12 && time < 16 && (
         <div className={styles.day}>
           <form onSubmit={handleLogin} className={styles.form}>
-            <h1>Логін</h1>
+            <h1>Логин</h1>
             <input
               type="text"
               placeholder="Имя"
@@ -191,7 +191,7 @@ export default function LoginPage() {
       {time >= 16 && time < 22 && (
         <div className={styles.evening}>
           <form onSubmit={handleLogin} className={styles.form}>
-            <h1>Логін</h1>
+            <h1>Логин</h1>
             <input
               type="text"
               placeholder="Имя"
@@ -222,7 +222,7 @@ export default function LoginPage() {
       {time >= 22 && time < 24 && (
         <div className={styles.night}>
           <form onSubmit={handleLogin} className={styles.form}>
-            <h1>Логін</h1>
+            <h1>Логин</h1>
             <input
               type="text"
               placeholder="Имя"
