@@ -2,15 +2,20 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import styles from "./page.module.scss";
 
 export default function RegisterPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter(); // хук для редіректу
+  const [time, setTime] = useState();
 
   // on mount: if already authenticated, redirect to /main unless user just logged out
   useEffect(() => {
+        let d = new Date();
+        let t = d.getHours();
+        setTime(t);
     try {
       const justLoggedOut = localStorage.getItem("justLoggedOut");
       if (justLoggedOut) {
@@ -60,7 +65,7 @@ export default function RegisterPage() {
     e.preventDefault();
     // client-side password validation: require at least 4 chars
     if (String(password).length < 4) {
-      setError("Пароль повинен бути не менше 4 символів");
+      setError("Пароль слишком короткий");
       return;
     }
     try {
@@ -72,7 +77,7 @@ export default function RegisterPage() {
 
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error || "Помилка реєстрації");
+        setError(data.error || "Ошибка регистрации");
         return;
       }
 
@@ -89,31 +94,139 @@ export default function RegisterPage() {
       // Після успішної реєстрації – редірект на MainPage
       router.push("/main"); // якщо твій MainPage.jsx знаходиться за шляхом /app/main/page.jsx
     } catch (err) {
-      setError("Помилка з сервером");
+      setError("Ошибка с сервером");
       console.error(err);
     }
   };
 
   return (
-    <form onSubmit={handleRegister}>
-      <h1>Реєстрація</h1>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        required
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-      <button type="submit">Зареєструватися</button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <a href="/login">Login</a>
-    </form>
+    <>
+      {time >= 0 && time < 6 && (
+        <div className={styles.night}>
+          <form onSubmit={handleRegister}>
+            <h1>Регистрация</h1>
+            <input
+              type="text"
+              placeholder="Имя"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Пароль"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <button type="submit">Зарегистрироваться</button>
+            {error && <p style={{ color: "red" }}>{error}</p>}
+            <a href="/login">Войти</a>
+          </form>
+        </div>
+      )}
+
+      {time >= 12 && time < 16 && (
+        <div className={styles.day}>
+          <form onSubmit={handleRegister}>
+            <h1>Регистрация</h1>
+            <input
+              type="text"
+              placeholder="Имя"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Пароль"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <button type="submit">Зарегистрироваться</button>
+            {error && <p style={{ color: "red" }}>{error}</p>}
+            <a href="/login">Войти</a>
+          </form>
+        </div>
+      )}
+
+      {time >= 16 && time < 22 && (
+        <div className={styles.evening}>
+          <form onSubmit={handleRegister} className={styles.form}>
+            <h1>Регистрация</h1>
+            <input
+              type="text"
+              placeholder="Имя"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              className={styles.input}
+            />
+            <input
+              type="password"
+              placeholder="Пароль"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className={styles.input}
+            />
+            <button type="submit" className={styles.button}>Зарегистрироваться</button>
+            {error && <p style={{ color: "white" }}>{error}</p>}
+            <a href="/login" className={styles.link}>Войти</a>
+          </form>
+        </div>
+      )}
+
+      {time >= 0 && time < 6 && (
+        <div className={styles.night}>
+          <form onSubmit={handleRegister} className={styles.form}>
+            <h1>Регистрация</h1>
+            <input
+              type="text"
+              placeholder="Имя"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Пароль"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <button type="submit">Зарегистрироваться</button>
+            {error && <p style={{ color: "red" }}>{error}</p>}
+            <a href="/login">Войти</a>
+          </form>
+        </div>
+      )}
+
+      {time >= 22 && time < 24 && (
+        <div class={styles.night}>
+          <form onSubmit={handleRegister} className={styles.form}>
+            <h1>Регистрация</h1>
+            <input
+              type="text"
+              placeholder="Имя"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Пароль"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <button type="submit">Зарегистрироваться</button>
+            {error && <p style={{ color: "red" }}>{error}</p>}
+            <a href="/login">Войти</a>
+          </form>
+        </div>
+      )}
+    </>
   );
 }

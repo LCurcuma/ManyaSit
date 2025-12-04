@@ -88,24 +88,27 @@ export default function LoginPage() {
   };
 
   return (
-    <form onSubmit={handleLogin}>
-      <h1>Логін</h1>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        required
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-      <button type="submit">Увійти</button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-    </form>
+    <div>
+      <form onSubmit={handleLogin}>
+        <h1>Логін</h1>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <button type="submit">Увійти</button>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+      </form>
+      <a href="/">Registrate</a>
+    </div>
   );
 }

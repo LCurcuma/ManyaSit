@@ -1,0 +1,68 @@
+@mixin breakpoint($breakpoint) {
+  @media (max-width: $breakpoint) {
+    @content;
+  }
+}
+
+@font-face {
+    font-family: main;
+    src: url("../public/fonts/Pacifico-Regular.ttf");
+}
+
+//незмінне
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    padding-top: 30vh;
+    font-family: main;
+    color: white;
+}
+
+.input{
+    padding: 10px;
+    background: rgba(37, 0, 48, 0.105);
+    border: 1px solid white;
+    border-radius: 20px;   
+}
+
+.button{
+    background: rgba(37, 0, 48, 0.105);
+    padding: 10px;
+    border: 1px solid white;
+    border-radius: 20px;
+}
+
+.button:hover{
+    background: rgba(37, 0, 48, 0.351);
+    cursor: pointer;
+}
+
+.link:hover{
+    text-decoration: underline;
+}
+
+//ніч
+.night{
+    background: linear-gradient(rgb(20, 15, 26), rgb(76, 50, 92));
+    min-height: 100vh;
+}
+
+//ранок
+.morning{
+  background: linear-gradient(rgb(148, 138, 255), rgb(218, 243, 255));
+  min-height: 100vh;
+}
+
+//день
+.day{
+  background: linear-gradient(rgb(191, 241, 255), rgb(121, 193, 255));
+  min-height: 100vh;
+}
+
+//вечір
+.evening{
+  background: linear-gradient(rgb(69, 12, 38),rgb(181, 45, 30));
+  min-height: 100vh;
+}
