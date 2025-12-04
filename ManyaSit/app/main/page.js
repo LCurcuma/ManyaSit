@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import SitAnim from "../../components/SitAnim/SitAnim";
 import LogoutButton from "../../components/LogoutButton/Logout";
 import styles from "./page.module.scss";
 
 export default function MainPage() {
+  const router = useRouter();
   const [user, setUser] = useState(null);
   const [rating, setRating] = useState([]);
   const [myPlace, setMyPlace] = useState("-");
@@ -15,7 +17,11 @@ export default function MainPage() {
   async function loadMeAndRating() {
     try {
       const token = localStorage.getItem("token");
-      if (!token) return console.error("Токен отсутствует");
+      if (!token) {
+        console.error("Токен отсутствует");
+        router.push("/login");
+        return;
+      }
 
       // Завантажуємо свій профіль
       const meRes = await fetch("/api/me", {
@@ -23,8 +29,13 @@ export default function MainPage() {
       });
 
       if (!meRes.ok) {
-        const txt = await meRes.text();
-        return console.error("Error fetching /api/me:", meRes.status, txt);
+        // Token is invalid, expired, or user not found
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        console.error("Error fetching /api/me:", meRes.status);
+        // Redirect to login so user can re-authenticate
+        router.push("/login");
+        return;
       }
 
       const meData = await meRes.json();
