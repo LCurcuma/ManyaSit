@@ -13,10 +13,10 @@ export default function LoginPage() {
 
   // on mount: if user already has a token, redirect to /main
   useEffect(() => {
-        let d = new Date();
-        let t = d.getHours();
+    let d = new Date();
+    let t = d.getHours();
     setTime(t);
-    
+
     try {
       const justLoggedOut = localStorage.getItem("justLoggedOut");
       if (justLoggedOut) {

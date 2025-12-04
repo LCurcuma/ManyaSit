@@ -13,10 +13,10 @@ export default function RegisterPage() {
 
   // on mount: if already authenticated, redirect to /main unless user just logged out
   useEffect(() => {
-        let d = new Date();
-        let t = d.getHours();
+    let d = new Date();
+    let t = d.getHours();
     setTime(t);
-    
+
     try {
       const justLoggedOut = localStorage.getItem("justLoggedOut");
       if (justLoggedOut) {
