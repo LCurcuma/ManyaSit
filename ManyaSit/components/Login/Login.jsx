@@ -4,14 +4,14 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.scss";
 
-export default function RegisterPage() {
+export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const router = useRouter(); // хук для редіректу
+  const router = useRouter();
   const [time, setTime] = useState();
 
-  // on mount: if already authenticated, redirect to /main unless user just logged out
+  // on mount: if user already has a token, redirect to /main
   useEffect(() => {
         let d = new Date();
         let t = d.getHours();
@@ -20,6 +20,7 @@ export default function RegisterPage() {
     try {
       const justLoggedOut = localStorage.getItem("justLoggedOut");
       if (justLoggedOut) {
+        // clear the transient flag and do not redirect (user came from logout)
         localStorage.removeItem("justLoggedOut");
         return;
       }
@@ -27,15 +28,16 @@ export default function RegisterPage() {
       const token = localStorage.getItem("token");
       const user = localStorage.getItem("user");
 
-      // Only redirect when both token and user data are present. This
-      // prevents redirecting to /main when the app has no account info
-      // (which would render an empty main page).
+      // Only redirect if we have both a token and stored user data.
+      // If token exists but user data is missing, do not redirect to avoid
+      // landing on an empty /main page.
       if (token && user) {
         router.push("/main");
         return;
       }
 
-      // If token exists but user info is missing, attempt to restore via /api/me
+      // If we have a token but no stored user, try to restore user info
+      // from the server (/api/me). If successful, save user and redirect.
       if (token && !user) {
         (async () => {
           try {
@@ -43,6 +45,7 @@ export default function RegisterPage() {
               headers: { Authorization: `Bearer ${token}` },
             });
             if (!res.ok) {
+              // invalid/expired token — remove it to avoid repeated attempts
               if (res.status === 401) localStorage.removeItem("token");
               return;
             }
@@ -58,44 +61,34 @@ export default function RegisterPage() {
         })();
       }
     } catch (e) {
-      console.warn("Register mount check failed", e);
+      // ignore storage errors
+      console.warn("Login mount check failed", e);
     }
   }, []);
 
-  const handleRegister = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // client-side password validation: require at least 4 chars
-    if (String(password).length < 4) {
-      setError("Пароль слишком короткий");
-      return;
-    }
     try {
-      const res = await fetch("/api/register", {
+      const res = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
 
       const data = await res.json();
+
       if (!res.ok) {
-        setError(data.error || "Ошибка регистрации");
+        setError(data.error || "Ошибка входа");
         return;
       }
 
-      // Якщо сервер повернув токен — зберігаємо його і логінемо користувача автоматично
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-      }
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
-      // store returned user object as well (if available)
-      if (data.user) {
-        localStorage.setItem("user", JSON.stringify(data.user));
-      }
-
-      // Після успішної реєстрації – редірект на MainPage
-      router.push("/main"); // якщо твій MainPage.jsx знаходиться за шляхом /app/main/page.jsx
+      // редірект тільки після успішного логіну
+      router.push("/main");
     } catch (err) {
-      setError("Ошибка с сервером");
+      setError("Ошибка сервера");
       console.error(err);
     }
   };
@@ -104,8 +97,8 @@ export default function RegisterPage() {
     <>
       {time >= 0 && time < 6 && (
         <div className={styles.night}>
-          <form onSubmit={handleRegister} className={styles.form}>
-            <h1>Регистрация</h1>
+          <form onSubmit={handleLogin} className={styles.form}>
+            <h1>Логін</h1>
             <input
               type="text"
               placeholder="Имя"
@@ -123,20 +116,20 @@ export default function RegisterPage() {
               className={styles.input}
             />
             <button type="submit" className={styles.button}>
-              Зарегистрироваться
+              Войти
             </button>
             {error && <p style={{ color: "white" }}>{error}</p>}
-            <a href="/login" className={styles.link}>
-              Вход
-            </a>
           </form>
+          <a href="/" className={styles.link}>
+            Регистрация
+          </a>
         </div>
       )}
 
       {time >= 6 && time < 12 && (
         <div className={styles.morning}>
-          <form onSubmit={handleRegister} className={styles.form}>
-            <h1>Регистрация</h1>
+          <form onSubmit={handleLogin} className={styles.form}>
+            <h1>Логін</h1>
             <input
               type="text"
               placeholder="Имя"
@@ -154,20 +147,20 @@ export default function RegisterPage() {
               className={styles.input}
             />
             <button type="submit" className={styles.button}>
-              Зарегистрироваться
+              Войти
             </button>
             {error && <p style={{ color: "white" }}>{error}</p>}
-            <a href="/login" className={styles.link}>
-              Вход
-            </a>
           </form>
+          <a href="/" className={styles.link}>
+            Регистрация
+          </a>
         </div>
       )}
 
       {time >= 12 && time < 16 && (
         <div className={styles.day}>
-          <form onSubmit={handleRegister} className={styles.form}>
-            <h1>Регистрация</h1>
+          <form onSubmit={handleLogin} className={styles.form}>
+            <h1>Логін</h1>
             <input
               type="text"
               placeholder="Имя"
@@ -185,20 +178,20 @@ export default function RegisterPage() {
               className={styles.input}
             />
             <button type="submit" className={styles.button}>
-              Зарегистрироваться
+              Войти
             </button>
             {error && <p style={{ color: "white" }}>{error}</p>}
-            <a href="/login" className={styles.link}>
-              Вход
-            </a>
           </form>
+          <a href="/" className={styles.link}>
+            Регистрация
+          </a>
         </div>
       )}
 
       {time >= 16 && time < 22 && (
         <div className={styles.evening}>
-          <form onSubmit={handleRegister} className={styles.form}>
-            <h1>Регистрация</h1>
+          <form onSubmit={handleLogin} className={styles.form}>
+            <h1>Логін</h1>
             <input
               type="text"
               placeholder="Имя"
@@ -216,51 +209,20 @@ export default function RegisterPage() {
               className={styles.input}
             />
             <button type="submit" className={styles.button}>
-              Зарегистрироваться
+              Войти
             </button>
             {error && <p style={{ color: "white" }}>{error}</p>}
-            <a href="/login" className={styles.link}>
-              Вход
-            </a>
           </form>
-        </div>
-      )}
-
-      {time >= 0 && time < 6 && (
-        <div className={styles.night}>
-          <form onSubmit={handleRegister} className={styles.form}>
-            <h1>Регистрация</h1>
-            <input
-              type="text"
-              placeholder="Имя"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              className={styles.input}
-            />
-            <input
-              type="password"
-              placeholder="Пароль"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className={styles.input}
-            />
-            <button type="submit" className={styles.button}>
-              Зарегистрироваться
-            </button>
-            {error && <p style={{ color: "white" }}>{error}</p>}
-            <a href="/login" className={styles.link}>
-              Вход
-            </a>
-          </form>
+          <a href="/" className={styles.link}>
+            Регистрация
+          </a>
         </div>
       )}
 
       {time >= 22 && time < 24 && (
-        <div class={styles.night}>
-          <form onSubmit={handleRegister} className={styles.form}>
-            <h1>Регистрация</h1>
+        <div className={styles.night}>
+          <form onSubmit={handleLogin} className={styles.form}>
+            <h1>Логін</h1>
             <input
               type="text"
               placeholder="Имя"
@@ -278,13 +240,13 @@ export default function RegisterPage() {
               className={styles.input}
             />
             <button type="submit" className={styles.button}>
-              Зарегистрироваться
+              Войти
             </button>
             {error && <p style={{ color: "white" }}>{error}</p>}
-            <a href="/login" className={styles.link}>
-              Вход
-            </a>
           </form>
+          <a href="/" className={styles.link}>
+            Регистрация
+          </a>
         </div>
       )}
     </>

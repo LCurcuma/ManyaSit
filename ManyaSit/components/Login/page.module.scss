@@ -6,7 +6,7 @@
 
 @font-face {
     font-family: main;
-    src: url("../public/fonts/Pacifico-Regular.ttf");
+    src: url("../../public/fonts/Pacifico-Regular.ttf");
 }
 
 //незмінне
@@ -29,7 +29,7 @@
 
 .button{
     background: rgba(37, 0, 48, 0.105);
-    padding: 5px 20px;
+    padding: 5px 70px;
     border: 1px solid white;
     border-radius: 20px;
     font-family: main;
@@ -40,6 +40,14 @@
     cursor: pointer;
 }
 
+.link{
+    text-decoration: none;
+    text-align: center;
+    width: 100%;
+    display: block;
+    margin-top: 15px;
+}
+
 .link:hover{
     text-decoration: underline;
 }
@@ -48,22 +56,26 @@
 .night{
     background: linear-gradient(rgb(20, 15, 26), rgb(76, 50, 92));
     min-height: 100vh;
+    font-family: main;
 }
 
 //ранок
 .morning{
   background: linear-gradient(rgb(148, 138, 255), rgb(218, 243, 255));
   min-height: 100vh;
+    font-family: main;
 }
 
 //день
 .day{
   background: linear-gradient(rgb(191, 241, 255), rgb(121, 193, 255));
   min-height: 100vh;
+    font-family: main;
 }
 
 //вечір
 .evening{
   background: linear-gradient(rgb(69, 12, 38),rgb(181, 45, 30));
   min-height: 100vh;
+    font-family: main;
 }
