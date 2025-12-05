@@ -1,13 +1,19 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import styles from "./page.module.scss";
 
 export default function SitAnim({ onClickUpdate }) {
   const [frame, setFrame] = useState(1);
   const [clicks, setClicks] = useState(0);
   const [imageKey, setImageKey] = useState(0);
+  const [isClient, setIsClient] = useState(false);
   const isAnimatingRef = useRef(false);
+
+  // Ensure component only renders on client
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const changeFrame = useCallback(
     async (e) => {
@@ -61,6 +67,10 @@ export default function SitAnim({ onClickUpdate }) {
       frame === 1 ? "/sit1.png" : frame === 2 ? "/sit.png" : "/sit2.png";
     return `${baseImage}?t=${imageKey}`;
   };
+
+  if (!isClient) {
+    return <div className={styles.anim} style={{ opacity: 0 }} />;
+  }
 
   return (
     <div onClick={changeFrame} className={styles.anim}>
