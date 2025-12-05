@@ -30,7 +30,7 @@ export async function POST(req) {
     const defaultAvatar = "/avatars/default.png";
 
     const { rows } = await pool.query(
-      "INSERT INTO users (username, password, avatar_url) VALUES ($1, $2, $3) RETURNING id, username, clicks, avatar_url",
+      "INSERT INTO users (username, password, avatar_url) VALUES ($1, $2, $3) RETURNING id, username, clicks, avatar_url, coins",
       [username, hash, defaultAvatar]
     );
 
@@ -50,13 +50,10 @@ export async function POST(req) {
 
     // Якщо помилка дублювання username
     if (err.code === "23505") {
-      return new Response(
-        JSON.stringify({ error: "Користувач з таким ім’ям вже існує" }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      return new Response(JSON.stringify({ error: "Это имя уже занято" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     return new Response(

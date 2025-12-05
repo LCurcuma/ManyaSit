@@ -1,42 +1,66 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback, useRef } from "react";
 import styles from "./page.module.scss";
 
 export default function SitAnim({ onClickUpdate }) {
   const [frame, setFrame] = useState(1);
   const [clicks, setClicks] = useState(0);
+  const isAnimatingRef = useRef(false);
 
-  async function changeFrame() {
-    const token = localStorage.getItem("token");
-    if (!token) return;
+  const changeFrame = useCallback(
+    async (e) => {
+      // Prevent event bubbling to parent elements
+      e.stopPropagation();
+      e.preventDefault();
 
-    if (onClickUpdate) onClickUpdate(); // оновлюємо профіль після кліку
+      // Prevent multiple rapid clicks from triggering multiple animations
+      if (isAnimatingRef.current) return;
+      isAnimatingRef.current = true;
 
-    const res = await fetch("/api/click", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+      const token = localStorage.getItem("token");
+      if (!token) {
+        isAnimatingRef.current = false;
+        return;
+      }
 
-    if (!res.ok) return;
-    const data = await res.json();
-    setClicks(data.clicks);
+      if (onClickUpdate) onClickUpdate(); // оновлюємо профіль після кліку
 
-    setFrame(2);
-    setTimeout(() => {
-      setFrame(3);
-      setTimeout(() => setFrame(1), 50);
-    }, 50);
-  }
+      const res = await fetch("/api/click", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        isAnimatingRef.current = false;
+        return;
+      }
+
+      const data = await res.json();
+      setClicks(data.clicks);
+
+      setFrame(2);
+      setTimeout(() => {
+        setFrame(3);
+        setTimeout(() => {
+          setFrame(1);
+          isAnimatingRef.current = false;
+        }, 50);
+      }, 30);
+    },
+    [onClickUpdate]
+  );
 
   return (
     <div onClick={changeFrame} className={styles.anim}>
-      {frame === 1 && <img src="/sit1.png" className={styles.img} />}
-      {frame === 2 && <img src="/sit.png" className={styles.img} />}
-      {frame === 3 && <img src="/sit2.png" className={styles.img} />}
+      <img
+        src={frame === 1 ? "/sit1.png" : frame === 2 ? "/sit.png" : "/sit2.png"}
+        className={styles.img}
+        alt="squat"
+      />
     </div>
   );
 }

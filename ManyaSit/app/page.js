@@ -8,6 +8,7 @@ export default function RegisterPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter(); // хук для редіректу
   const [time, setTime] = useState();
 
@@ -74,9 +75,15 @@ export default function RegisterPage() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    // Prevent multiple submissions while request is in flight
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
     // client-side password validation: require at least 4 chars
     if (String(password).length < 4) {
       setError("Пароль слишком короткий");
+      setIsSubmitting(false);
       return;
     }
     try {
@@ -89,6 +96,7 @@ export default function RegisterPage() {
       const data = await res.json();
       if (!res.ok) {
         setError(data.error || "Ошибка регистрации");
+        setIsSubmitting(false);
         return;
       }
 
@@ -107,6 +115,7 @@ export default function RegisterPage() {
     } catch (err) {
       setError("Ошибка с сервером");
       console.error(err);
+      setIsSubmitting(false);
     }
   };
 
@@ -132,8 +141,12 @@ export default function RegisterPage() {
               required
               className={styles.input}
             />
-            <button type="submit" className={styles.button}>
-              Зарегистрироваться
+            <button
+              type="submit"
+              className={styles.button}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Загружается..." : "Зарегистрироваться"}
             </button>
             {error && <p style={{ color: "white" }}>{error}</p>}
             <a href="/login" className={styles.link}>
@@ -163,8 +176,12 @@ export default function RegisterPage() {
               required
               className={styles.input}
             />
-            <button type="submit" className={styles.button}>
-              Зарегистрироваться
+            <button
+              type="submit"
+              className={styles.button}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Загружается..." : "Зарегистрироваться"}
             </button>
             {error && <p style={{ color: "white" }}>{error}</p>}
             <a href="/login" className={styles.link}>
@@ -194,8 +211,12 @@ export default function RegisterPage() {
               required
               className={styles.input}
             />
-            <button type="submit" className={styles.button}>
-              Зарегистрироваться
+            <button
+              type="submit"
+              className={styles.button}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Загружается..." : "Зарегистрироваться"}
             </button>
             {error && <p style={{ color: "white" }}>{error}</p>}
             <a href="/login" className={styles.link}>
@@ -256,8 +277,12 @@ export default function RegisterPage() {
               required
               className={styles.input}
             />
-            <button type="submit" className={styles.button}>
-              Зарегистрироваться
+            <button
+              type="submit"
+              className={styles.button}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Загружается..." : "Зарегистрироваться"}
             </button>
             {error && <p style={{ color: "white" }}>{error}</p>}
             <a href="/login" className={styles.link}>
@@ -287,8 +312,12 @@ export default function RegisterPage() {
               required
               className={styles.input}
             />
-            <button type="submit" className={styles.button}>
-              Зарегистрироваться
+            <button
+              type="submit"
+              className={styles.button}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Загружается..." : "Зарегистрироваться"}
             </button>
             {error && <p style={{ color: "white" }}>{error}</p>}
             <a href="/login" className={styles.link}>

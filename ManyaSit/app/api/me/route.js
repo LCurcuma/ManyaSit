@@ -6,7 +6,7 @@ export async function GET(req) {
     const { userId } = verifyToken(req);
 
     const { rows } = await pool.query(
-      "SELECT id, username, avatar_url, clicks FROM users WHERE id = $1",
+      "SELECT id, username, avatar_url, clicks, coins FROM users WHERE id = $1",
       [userId]
     );
 

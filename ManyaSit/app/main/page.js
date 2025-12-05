@@ -73,6 +73,15 @@ export default function MainPage() {
     let t = d.getHours();
     setTime(t);
     loadMeAndRating();
+
+    // Set up live polling to track other users' clicks
+    // Poll every 2 seconds to update the rating in real-time
+    const pollInterval = setInterval(() => {
+      loadMeAndRating();
+    }, 100000);
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(pollInterval);
   }, []);
 
   return (
@@ -80,6 +89,24 @@ export default function MainPage() {
       {time >= 0 && time < 6 && (
         <div className={styles.night}>
           <div className={styles.snow_container}>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
+            <div className={styles.snow}></div>
             <div className={styles.snow}></div>
             <div className={styles.snow}></div>
             <div className={styles.snow}></div>
@@ -206,12 +233,13 @@ export default function MainPage() {
                     className={styles.profile_pic}
                   />
                 ) : (
-                  <div style={{ width: 80, height: 80, background: "#ccc" }} />
+                  <div style={{ width: 100, height: 100, background: "#ccc" }} />
                 )}
               </a>
               <div className={styles.profile_text}>
                 <p>Имя: {user.username}</p>
                 <p>Приседаний: {user.clicks}</p>
+                <p>Монеты: {user.coins || 0}</p>
                 <p>Место в рейтинге: {myPlace}</p>
               </div>
 
@@ -377,12 +405,13 @@ export default function MainPage() {
                     className={styles.profile_pic}
                   />
                 ) : (
-                  <div style={{ width: 80, height: 80, background: "#ccc" }} />
+                  <div style={{ width: 100, height: 100, background: "#ccc" }} />
                 )}
               </a>
               <div className={styles.profile_text}>
                 <p>Имя: {user.username}</p>
                 <p>Приседаний: {user.clicks}</p>
+                <p>Монеты: {user.coins || 0}</p>
                 <p>Место в рейтинге: {myPlace}</p>
               </div>
 
@@ -548,12 +577,13 @@ export default function MainPage() {
                     className={styles.profile_pic}
                   />
                 ) : (
-                  <div style={{ width: 80, height: 80, background: "#ccc" }} />
+                  <div style={{ width: 100, height: 100, background: "#ccc" }} />
                 )}
               </a>
               <div className={styles.profile_text}>
                 <p>Имя: {user.username}</p>
                 <p>Приседаний: {user.clicks}</p>
+                <p>Монеты: {user.coins || 0}</p>
                 <p>Место в рейтинге: {myPlace}</p>
               </div>
 
@@ -719,12 +749,13 @@ export default function MainPage() {
                     className={styles.profile_pic}
                   />
                 ) : (
-                  <div style={{ width: 80, height: 80, background: "#ccc" }} />
+                  <div style={{ width: 100, height: 100, background: "#ccc" }} />
                 )}
               </a>
               <div className={styles.profile_text}>
                 <p>Имя: {user.username}</p>
                 <p>Приседаний: {user.clicks}</p>
+                <p>Монеты: {user.coins || 0}</p>
                 <p>Место в рейтинге: {myPlace}</p>
               </div>
 
@@ -890,12 +921,13 @@ export default function MainPage() {
                     className={styles.profile_pic}
                   />
                 ) : (
-                  <div style={{ width: 80, height: 80, background: "#ccc" }} />
+                  <div style={{ width: 100, height: 100, background: "#ccc" }} />
                 )}
               </a>
               <div className={styles.profile_text}>
                 <p>Имя: {user.username}</p>
                 <p>Приседания: {user.clicks}</p>
+                <p>Монеты: {user.coins || 0}</p>
                 <p>Место в рейтинге: {myPlace}</p>
               </div>
 
