@@ -9,6 +9,7 @@ export default function SitAnim({ onClickUpdate }) {
   const [imageKey, setImageKey] = useState(0);
   const [isClient, setIsClient] = useState(false);
   const isAnimatingRef = useRef(false);
+  const localClicksRef = useRef(0);
 
   // Ensure component only renders on client
   useEffect(() => {
@@ -31,23 +32,48 @@ export default function SitAnim({ onClickUpdate }) {
         return;
       }
 
+      // Optimistic update: increment locally immediately for better feel
+      localClicksRef.current += 1;
+      setClicks((prev) => prev + 1);
+
       if (onClickUpdate) onClickUpdate(); // оновлюємо профіль після кліку
 
-      const res = await fetch("/api/click", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      // Send to server with no-cache and keep-alive
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
 
-      if (!res.ok) {
+      try {
+        const res = await fetch("/api/click", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+            "Connection": "keep-alive",
+          },
+          signal: controller.signal,
+        });
+
+        clearTimeout(timeoutId);
+
+        if (!res.ok) {
+          // Revert optimistic update on error
+          setClicks((prev) => Math.max(0, prev - 1));
+          localClicksRef.current = Math.max(0, localClicksRef.current - 1);
+          isAnimatingRef.current = false;
+          return;
+        }
+
+        const data = await res.json();
+        setClicks(data.clicks);
+        localClicksRef.current = data.clicks;
+      } catch (err) {
+        console.error("Click error:", err);
+        // Revert optimistic update
+        setClicks((prev) => Math.max(0, prev - 1));
+        localClicksRef.current = Math.max(0, localClicksRef.current - 1);
         isAnimatingRef.current = false;
         return;
       }
-
-      const data = await res.json();
-      setClicks(data.clicks);
 
       setFrame(2);
       setImageKey((prev) => prev + 1);
