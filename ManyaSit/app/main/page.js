@@ -68,6 +68,37 @@ export default function MainPage() {
     }
   }
 
+  // Handle click updates from SitAnim - update user state immediately with clicks/coins
+  // Also update the rating list so other users see the new click count
+  async function handleClickUpdate(data) {
+    if (data && user) {
+      // Update user with new clicks and coins immediately for UI feel
+      setUser((prevUser) => ({
+        ...prevUser,
+        clicks: data.clicks,
+        coins: data.coins,
+      }));
+
+      // Also update the rating list so the user's position updates
+      setRating((prevRating) => {
+        return prevRating
+          .map((u) => {
+            if (String(u.id) === String(user.id)) {
+              return { ...u, clicks: data.clicks };
+            }
+            return u;
+          })
+          .sort((a, b) => b.clicks - a.clicks); // Re-sort by clicks
+      });
+
+      // Recalculate user's position in ranking
+      const newPlaceRaw =
+        rating.findIndex((u) => String(u.id) === String(user.id)) + 1;
+      const newPlace = newPlaceRaw > 0 ? newPlaceRaw : "Не в топі";
+      setMyPlace(newPlace);
+    }
+  }
+
   useEffect(() => {
     let d = new Date();
     let t = d.getHours();
@@ -233,7 +264,9 @@ export default function MainPage() {
                     className={styles.profile_pic}
                   />
                 ) : (
-                  <div style={{ width: 100, height: 100, background: "#ccc" }} />
+                  <div
+                    style={{ width: 100, height: 100, background: "#ccc" }}
+                  />
                 )}
               </a>
               <div className={styles.profile_text}>
@@ -249,7 +282,7 @@ export default function MainPage() {
           )}
 
           {/* Передаємо функцію оновлення у SitAnim */}
-          <SitAnim onClickUpdate={loadMeAndRating} />
+          <SitAnim onClickUpdate={handleClickUpdate} />
 
           <h2 className={styles.h2}>Рейтинг</h2>
           <ul className={styles.rating}>
@@ -405,7 +438,9 @@ export default function MainPage() {
                     className={styles.profile_pic}
                   />
                 ) : (
-                  <div style={{ width: 100, height: 100, background: "#ccc" }} />
+                  <div
+                    style={{ width: 100, height: 100, background: "#ccc" }}
+                  />
                 )}
               </a>
               <div className={styles.profile_text}>
@@ -421,7 +456,7 @@ export default function MainPage() {
           )}
 
           {/* Передаємо функцію оновлення у SitAnim */}
-          <SitAnim onClickUpdate={loadMeAndRating} />
+          <SitAnim onClickUpdate={handleClickUpdate} />
 
           <h2 className={styles.h2}>Рейтинг</h2>
           <ul className={styles.rating}>
@@ -577,7 +612,9 @@ export default function MainPage() {
                     className={styles.profile_pic}
                   />
                 ) : (
-                  <div style={{ width: 100, height: 100, background: "#ccc" }} />
+                  <div
+                    style={{ width: 100, height: 100, background: "#ccc" }}
+                  />
                 )}
               </a>
               <div className={styles.profile_text}>
@@ -593,7 +630,7 @@ export default function MainPage() {
           )}
 
           {/* Передаємо функцію оновлення у SitAnim */}
-          <SitAnim onClickUpdate={loadMeAndRating} />
+          <SitAnim onClickUpdate={handleClickUpdate} />
 
           <h2 className={styles.h2}>Рейтинг</h2>
           <ul className={styles.rating}>
@@ -749,7 +786,9 @@ export default function MainPage() {
                     className={styles.profile_pic}
                   />
                 ) : (
-                  <div style={{ width: 100, height: 100, background: "#ccc" }} />
+                  <div
+                    style={{ width: 100, height: 100, background: "#ccc" }}
+                  />
                 )}
               </a>
               <div className={styles.profile_text}>
@@ -765,7 +804,7 @@ export default function MainPage() {
           )}
 
           {/* Передаємо функцію оновлення у SitAnim */}
-          <SitAnim onClickUpdate={loadMeAndRating} />
+          <SitAnim onClickUpdate={handleClickUpdate} />
 
           <h2 className={styles.h2}>Рейтинг</h2>
           <ul className={styles.rating}>
@@ -921,7 +960,9 @@ export default function MainPage() {
                     className={styles.profile_pic}
                   />
                 ) : (
-                  <div style={{ width: 100, height: 100, background: "#ccc" }} />
+                  <div
+                    style={{ width: 100, height: 100, background: "#ccc" }}
+                  />
                 )}
               </a>
               <div className={styles.profile_text}>
@@ -937,7 +978,7 @@ export default function MainPage() {
           )}
 
           {/* Передаємо функцію оновлення у SitAnim */}
-          <SitAnim onClickUpdate={loadMeAndRating} />
+          <SitAnim onClickUpdate={handleClickUpdate} />
 
           <h2 className={styles.h2}>Рейтинг</h2>
           <ul className={styles.rating}>

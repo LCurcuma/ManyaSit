@@ -36,8 +36,6 @@ export default function SitAnim({ onClickUpdate }) {
       localClicksRef.current += 1;
       setClicks((prev) => prev + 1);
 
-      if (onClickUpdate) onClickUpdate(); // оновлюємо профіль після кліку
-
       // Send to server with no-cache and keep-alive
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
@@ -48,7 +46,7 @@ export default function SitAnim({ onClickUpdate }) {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
-            "Connection": "keep-alive",
+            Connection: "keep-alive",
           },
           signal: controller.signal,
         });
@@ -66,6 +64,11 @@ export default function SitAnim({ onClickUpdate }) {
         const data = await res.json();
         setClicks(data.clicks);
         localClicksRef.current = data.clicks;
+
+        // Call onClickUpdate with the new data so parent can update immediately
+        if (onClickUpdate) {
+          onClickUpdate(data); // Pass clicks and coins data
+        }
       } catch (err) {
         console.error("Click error:", err);
         // Revert optimistic update
