@@ -6,6 +6,7 @@ import styles from "./page.module.scss";
 export default function SitAnim({ onClickUpdate }) {
   const [frame, setFrame] = useState(1);
   const [clicks, setClicks] = useState(0);
+  const [imageKey, setImageKey] = useState(0);
   const isAnimatingRef = useRef(false);
 
   const changeFrame = useCallback(
@@ -43,6 +44,7 @@ export default function SitAnim({ onClickUpdate }) {
       setClicks(data.clicks);
 
       setFrame(2);
+      setImageKey((prev) => prev + 1);
       setTimeout(() => {
         setFrame(3);
         setTimeout(() => {
@@ -54,13 +56,15 @@ export default function SitAnim({ onClickUpdate }) {
     [onClickUpdate]
   );
 
+  const getSitImage = () => {
+    const baseImage =
+      frame === 1 ? "/sit1.png" : frame === 2 ? "/sit.png" : "/sit2.png";
+    return `${baseImage}?t=${imageKey}`;
+  };
+
   return (
     <div onClick={changeFrame} className={styles.anim}>
-      <img
-        src={frame === 1 ? "/sit1.png" : frame === 2 ? "/sit.png" : "/sit2.png"}
-        className={styles.img}
-        alt="squat"
-      />
+      <img src={getSitImage()} className={styles.img} alt="squat" />
     </div>
   );
 }
