@@ -49,7 +49,7 @@ export default function SitAnim({ onClickUpdate }) {
           setFrame(1);
           isAnimatingRef.current = false;
         }, 50);
-      }, 30);
+      }, 50);
     },
     [onClickUpdate]
   );
