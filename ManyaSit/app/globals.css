@@ -24,6 +24,17 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Prevent layout shift when the vertical scrollbar appears/disappears.
+   Reserve scrollbar gutter space and force a stable vertical scroll behavior. */
+html,
+body {
+  height: 100%;
+  /* Always reserve vertical scrollbar space to avoid layout shifts */
+  overflow-y: scroll;
+  /* Modern property to keep scrollbar gutter stable when scrollbar appears */
+  scrollbar-gutter: stable;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;

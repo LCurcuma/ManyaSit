@@ -1,0 +1,114 @@
+.container {
+  padding: 20px;
+  background: rgba(31, 0, 94, 0.1);
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+.title {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: white;
+}
+
+.deviceList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 15px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.deviceItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  font-size: 14px;
+  color: white;
+}
+
+.deviceInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+
+.deviceId {
+  font-family: monospace;
+  font-size: 12px;
+  opacity: 0.8;
+  word-break: break-all;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  background: #4caf50;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  width: fit-content;
+}
+
+.lastSeen {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.deleteBtn {
+  padding: 6px 12px;
+  background: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background 0.3s;
+}
+
+.deleteBtn:hover {
+  background: #d32f2f;
+}
+
+.refreshBtn {
+  padding: 8px 16px;
+  background: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.refreshBtn:hover {
+  background: #1976d2;
+}
+
+.loading,
+.empty,
+.error {
+  text-align: center;
+  padding: 15px;
+  font-size: 14px;
+}
+
+.loading,
+.empty {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.error {
+  color: #f44336;
+}
+
+.btn_container{
+    display: flex;
+    gap: 10px;
+}

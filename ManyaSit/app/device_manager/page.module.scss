@@ -1,0 +1,49 @@
+//незмінне
+.bg{
+    margin: 0;
+    padding: 0;
+}
+
+.dvmn{
+    margin: 25vh 10vw;
+}
+
+//ніч
+.night{
+        position:absolute;
+    top: 0;
+    left: 0;
+  background: linear-gradient(rgb(20, 15, 26), rgb(76, 50, 92));
+min-height: 100vh;
+min-width: 100vw;
+}
+
+//ранок
+.morning{
+    position:absolute;
+    top: 0;
+    left: 0;
+  background: linear-gradient(rgb(148, 138, 255), rgb(218, 243, 255));
+min-height: 100vh;
+min-width: 100vw;
+}
+
+//день
+.day{
+    position:absolute;
+    top: 0;
+    left: 0;
+  background: linear-gradient(rgb(191, 241, 255), rgb(121, 193, 255));
+min-height: 100vh;
+min-width: 100vw;
+}
+
+//вечір
+.evening{
+    position:absolute;
+    top: 0;
+    left: 0;
+      background: linear-gradient(rgb(69, 12, 38), rgb(181, 45, 30));
+min-height: 100vh;
+min-width: 100vw;
+}

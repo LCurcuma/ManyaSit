@@ -115,6 +115,30 @@
   gap: 5px;
 }
 
+.btn_container{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn{
+    background: rgba(0, 0, 0, 0.11);
+    border: 1px solid white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    align-self: center;
+    min-width: 100%;
+    text-align: center;
+    font-size: 12px;
+}
+
+.btn:hover{
+    background: rgba(0, 0, 0, 0.214);
+    cursor: pointer;
+}
+
 //night
 .night {
   background: linear-gradient(rgb(20, 15, 26), rgb(76, 50, 92));
@@ -182,7 +206,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  min-height: 100vh;
+  min-height: 90vh;
 }
 
 .snow {

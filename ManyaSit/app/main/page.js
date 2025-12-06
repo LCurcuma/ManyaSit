@@ -12,6 +12,28 @@ export default function MainPage() {
   const [rating, setRating] = useState([]);
   const [myPlace, setMyPlace] = useState("-");
   const [time, setTime] = useState();
+  const [clicked, setClicked] = useState(false);
+
+  // Register current device on page load
+  async function registerDevice() {
+    try {
+      const token = localStorage.getItem("token");
+      const deviceId = localStorage.getItem("deviceId");
+
+      if (!token || !deviceId) return;
+
+      await fetch("/api/register-device", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ deviceId }),
+      });
+    } catch (err) {
+      console.error("Failed to register device:", err);
+    }
+  }
 
   // Функція для завантаження користувача і рейтингу
   async function loadMeAndRating() {
@@ -104,12 +126,13 @@ export default function MainPage() {
     let t = d.getHours();
     setTime(t);
     loadMeAndRating();
+    registerDevice(); // Register current device
 
     // Set up live polling to track other users' clicks
     // Poll every 2 seconds to update the rating in real-time
     const pollInterval = setInterval(() => {
       loadMeAndRating();
-    }, 100000);
+    }, 600000);
 
     // Cleanup interval on component unmount
     return () => clearInterval(pollInterval);
@@ -276,8 +299,16 @@ export default function MainPage() {
                 <p>Место в рейтинге: {myPlace}</p>
               </div>
 
-              {/* logout action clears localStorage and resets state */}
-              <LogoutButton onLogout={() => setUser(null)} />
+              <div className={styles.btn_container}>
+                <a href="/news" className={styles.btn}>
+                  Новости
+                </a>
+                <a href="/device_manager" className={styles.btn}>
+                  Управление устройствами
+                </a>
+                {/* logout action clears localStorage and resets state */}
+                <LogoutButton onLogout={() => setUser(null)} />
+              </div>
             </div>
           )}
 
@@ -450,8 +481,16 @@ export default function MainPage() {
                 <p>Место в рейтинге: {myPlace}</p>
               </div>
 
-              {/* logout action clears localStorage and resets state */}
-              <LogoutButton onLogout={() => setUser(null)} />
+              <div className={styles.btn_container}>
+                <a href="/news" className={styles.btn}>
+                  Новости
+                </a>
+                <a href="/device_manager" className={styles.btn}>
+                  Управление устройствами
+                </a>
+                {/* logout action clears localStorage and resets state */}
+                <LogoutButton onLogout={() => setUser(null)} />
+              </div>
             </div>
           )}
 
@@ -624,8 +663,16 @@ export default function MainPage() {
                 <p>Место в рейтинге: {myPlace}</p>
               </div>
 
-              {/* logout action clears localStorage and resets state */}
-              <LogoutButton onLogout={() => setUser(null)} />
+              <div className={styles.btn_container}>
+                <a href="/news" className={styles.btn}>
+                  Новости
+                </a>
+                <a href="/device_manager" className={styles.btn}>
+                  Управление устройствами
+                </a>
+                {/* logout action clears localStorage and resets state */}
+                <LogoutButton onLogout={() => setUser(null)} />
+              </div>
             </div>
           )}
 
@@ -798,8 +845,16 @@ export default function MainPage() {
                 <p>Место в рейтинге: {myPlace}</p>
               </div>
 
-              {/* logout action clears localStorage and resets state */}
-              <LogoutButton onLogout={() => setUser(null)} />
+              <div className={styles.btn_container}>
+                <a href="/news" className={styles.btn}>
+                  Новости
+                </a>
+                <a href="/device_manager" className={styles.btn}>
+                  Управление устройствами
+                </a>
+                {/* logout action clears localStorage and resets state */}
+                <LogoutButton onLogout={() => setUser(null)} />
+              </div>
             </div>
           )}
 
@@ -918,36 +973,6 @@ export default function MainPage() {
             <div className={styles.snow}></div>
             <div className={styles.snow}></div>
             <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
-            <div className={styles.snow}></div>
           </div>
           {user && (
             <div className={styles.profile_with_avatar}>
@@ -972,8 +997,16 @@ export default function MainPage() {
                 <p>Место в рейтинге: {myPlace}</p>
               </div>
 
-              {/* logout action clears localStorage and resets state */}
-              <LogoutButton onLogout={() => setUser(null)} />
+              <div className={styles.btn_container}>
+                <a href="/news" className={styles.btn}>
+                  Новости
+                </a>
+                <a href="/device_manager" className={styles.btn}>
+                  Управление устройствами
+                </a>
+                {/* logout action clears localStorage and resets state */}
+                <LogoutButton onLogout={() => setUser(null)} />
+              </div>
             </div>
           )}
 

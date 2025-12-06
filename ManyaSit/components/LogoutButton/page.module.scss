@@ -1,10 +1,18 @@
+@font-face {
+  font-family: main;
+  src: url("../../public/fonts/Pacifico-Regular.ttf");
+}
+
 .btn{
     background: rgba(0, 0, 0, 0.11);
     border: 1px solid white;
-    width: 75px;
-    height: 40px;
     border-radius: 20px;
     align-self: center;
+    font-family: main;
+    font-weight: 600;
+    width: 100%;
+    padding: 5px 0;
+    font-size: 12px;
 }
 
 .btn:hover{
